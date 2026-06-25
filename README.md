@@ -58,7 +58,7 @@
 
 ### 伺服器資訊
 * **伺服器地址 (IP):** `play.c08.net`
-* **版本:** Minecraft Java Edition 1.20.11
+* **版本:** Minecraft Java Edition 26.2
 * **正版驗證:** 開啟 (Online Mode)
 
 ### 加入步驟
