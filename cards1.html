@@ -96,9 +96,7 @@
         .filter-container.expanded .filter-row-hidden {
             max-height: 400px;
         }
-        @media (hover: none) {
-            .filter-row-hidden { max-height: none !important; }
-        }
+
 
         .glass-panel {
             background: rgba(255,255,255,0.02); backdrop-filter: blur(20px);
@@ -768,6 +766,27 @@
         });
 
         window.onload = () => { renderFilters(); renderCardList(); renderDetail(); renderTimeTree(); };
+
+    window.onload = () => { 
+        renderFilters(); 
+        renderCardList(); 
+        renderDetail(); 
+        renderTimeTree();
+        
+        // 手機版過濾器點擊展開/收起
+        const filterContainer = document.getElementById('filter-container');
+        if (filterContainer) {
+            filterContainer.addEventListener('click', function(e) {
+                // 僅在手機版 (寬度 <= 768px) 啟用點擊切換
+                if (window.innerWidth <= 768) {
+                    // 若點擊目標是容器本身或非按鈕元素，則切換展開狀態
+                    if (!e.target.closest('.filter-btn')) {
+                        this.classList.toggle('expanded');
+                    }
+                }
+            });
+        }
+    };        
     </script>
 </body>
 </html>
