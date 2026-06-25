@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>山岳礦工藝 | 檔案庫</title>
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest">
-    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
             --bg-dark: #050507;
@@ -97,7 +95,6 @@
             max-height: 400px;
         }
 
-
         .glass-panel {
             background: rgba(255,255,255,0.02); backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05);
@@ -143,7 +140,6 @@
             cursor: pointer; 
         }
         .timeline-card:active { transform: scale(0.97); transition: transform 0.1s ease; }
-        /* 悬停发光效果 */
         .timeline-card:hover {
             box-shadow: 0 0 25px rgba(6,182,212,0.35);
             border-color: rgba(6,182,212,0.5);
@@ -159,7 +155,6 @@
             border-color: #fff;
         }
 
-        /* 卡片悬停时节点的高亮样式 */
         .dot-hover-glow {
             transform: scale(1.5);
             box-shadow: 0 0 0 6px rgba(6,182,212,0.3), 0 0 25px #06b6d4;
@@ -189,7 +184,10 @@
 
         .log-bullet { display: inline-block; color: #06b6d4; margin-right: 0.5rem; text-shadow: 0 0 8px rgba(6,182,212,0.5); }
         .content-scroll { max-height: 55vh; overflow-y: auto; padding-right: 0.5rem; scroll-behavior: smooth; }
-        @media (max-width: 768px) { .content-scroll { max-height: 40vh; padding-right: 0.25rem; } }
+        @media (max-width: 768px) { 
+            .content-scroll { max-height: 40vh; padding-right: 0.25rem; } 
+            #card-list { max-height: 55vh; }  /* 手機版卡片列表高度增加 */
+        }
 
         .log-category { margin-top: 1.5rem; }
         .log-category:first-child { margin-top: 0; }
@@ -734,7 +732,16 @@
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
-        function setFilter(type) { filterType = type; renderFilters(); renderCardList(); }
+        function setFilter(type) { 
+            filterType = type; 
+            renderFilters(); 
+            renderCardList();
+            // 手機版點擊過濾器按鈕後自動收起靈動島
+            if (window.innerWidth <= 768) {
+                const filterContainer = document.getElementById('filter-container');
+                if (filterContainer) filterContainer.classList.remove('expanded');
+            }
+        }
 
         function setActive(id, options = {}) {
             if (activeId === id && !options.forceScroll) return;
@@ -765,28 +772,24 @@
             }
         });
 
-        window.onload = () => { renderFilters(); renderCardList(); renderDetail(); renderTimeTree(); };
-
-    window.onload = () => { 
-        renderFilters(); 
-        renderCardList(); 
-        renderDetail(); 
-        renderTimeTree();
-        
-        // 手機版過濾器點擊展開/收起
-        const filterContainer = document.getElementById('filter-container');
-        if (filterContainer) {
-            filterContainer.addEventListener('click', function(e) {
-                // 僅在手機版 (寬度 <= 768px) 啟用點擊切換
-                if (window.innerWidth <= 768) {
-                    // 若點擊目標是容器本身或非按鈕元素，則切換展開狀態
-                    if (!e.target.closest('.filter-btn')) {
-                        this.classList.toggle('expanded');
+        window.onload = () => { 
+            renderFilters(); 
+            renderCardList(); 
+            renderDetail(); 
+            renderTimeTree();
+            
+            // 手機版過濾器點擊展開/收起
+            const filterContainer = document.getElementById('filter-container');
+            if (filterContainer) {
+                filterContainer.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        if (!e.target.closest('.filter-btn')) {
+                            this.classList.toggle('expanded');
+                        }
                     }
-                }
-            });
-        }
-    };        
+                });
+            }
+        };
     </script>
 </body>
 </html>
