@@ -2,11 +2,13 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>山岳礦工藝|檔案庫</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>山岳礦工藝 | 檔案庫</title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest">
+    </script>
     <style>
         :root {
             --bg-dark: #050507;
@@ -21,59 +23,56 @@
             font-family: 'Inter', sans-serif;
             margin: 0;
             overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
-
         .font-shan { font-family: 'Ma Shan Zheng', cursive; }
         .font-mono { font-family: 'JetBrains Mono', monospace; }
 
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(6, 182, 212, 0.2);
-            border-radius: 10px;
-        }
+        ::-webkit-scrollbar-thumb { background: rgba(6, 182, 212, 0.2); border-radius: 10px; }
 
-        nav {
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        nav.nav-hidden {
-            transform: translateY(-100%);
-        }
+        nav { transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        nav.nav-hidden { transform: translateY(-100%); }
 
-        /* HOME 按鈕樣式 */
         .fixed-home {
-            position: fixed;
-            right: 24px;
-            top: 24px;
-            z-index: 200;
-            backdrop-filter: blur(12px);
+            position: fixed; right: 20px; top: 20px; z-index: 200;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            transition: all 0.3s var(--smooth-curve);
+            display: flex; align-items: center; gap: 0.5rem;
+            cursor: pointer;
+        }
+        @media (max-width: 640px) {
+            .fixed-home { right: 12px; top: 10px; padding: 8px 14px !important; gap: 6px !important; border-radius: 10px !important; }
+            .fixed-home span { font-size: 10px !important; }
+            .fixed-home i { width: 16px !important; height: 16px !important; }
         }
 
         .list-card {
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer; position: relative;
         }
+        .list-card:active { transform: scale(0.97); transition: transform 0.1s ease; }
 
         .card-active {
             background: var(--cyan-active) !important;
             border-color: rgba(6, 182, 212, 0.5) !important;
-            transform: translateX(12px) scale(1.02);
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(6, 182, 212, 0.1);
+            transform: translateX(8px) scale(1.02);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5), inset 0 0 15px rgba(6,182,212,0.1);
         }
-
+        @media (max-width: 768px) {
+            .card-active { transform: translateX(4px) scale(1.01); }
+        }
         .card-active::before {
-            content: '';
-            position: absolute;
-            left: -12px;
-            top: 20%;
-            height: 60%;
-            width: 4px;
-            background: #06b6d4;
-            border-radius: 0 4px 4px 0;
+            content: ''; position: absolute; left: -10px; top: 20%; height: 60%; width: 3px;
+            background: #06b6d4; border-radius: 0 4px 4px 0;
             box-shadow: 0 0 15px #06b6d4;
             animation: slideInLeft 0.3s var(--smooth-curve);
         }
-
+        @media (max-width: 768px) {
+            .card-active::before { left: -6px; width: 2px; }
+        }
         @keyframes slideInLeft {
             from { transform: scaleY(0); opacity: 0; }
             to { transform: scaleY(1); opacity: 1; }
@@ -81,234 +80,221 @@
 
         .filter-btn {
             transition: all 0.3s var(--smooth-curve);
+            cursor: pointer; -webkit-tap-highlight-color: transparent;
+        }
+        .filter-btn:active { transform: scale(0.92); transition: transform 0.1s ease; }
+        .filter-btn.active {
+            background: rgba(6, 182, 212, 0.2); border-color: rgba(6, 182, 212, 0.6); color: #06b6d4;
         }
 
-        .filter-btn.active {
-            background: rgba(6, 182, 212, 0.2);
-            border-color: rgba(6, 182, 212, 0.6);
-            color: #06b6d4;
+        .filter-row-hidden {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.75s cubic-bezier(0.42, 0.0, 0.58, 1.0);
+        }
+        .filter-container:hover .filter-row-hidden,
+        .filter-container.expanded .filter-row-hidden {
+            max-height: 400px;
+        }
+        @media (hover: none) {
+            .filter-row-hidden { max-height: none !important; }
         }
 
         .glass-panel {
-            background: rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.02); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05);
         }
 
         .detail-fade-in {
             animation: detailReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-
         @keyframes detailReveal {
             from { opacity: 0; transform: translateY(20px) scale(0.98); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .timeline-line {
-            background: linear-gradient(to bottom, transparent, rgba(6, 182, 212, 0.2) 10%, rgba(6, 182, 212, 0.2) 90%, transparent);
+            background: linear-gradient(to bottom, transparent, rgba(6,182,212,0.2) 10%, rgba(6,182,212,0.2) 90%, transparent);
             left: 24px;
         }
-        @media (min-width: 768px) {
-            .timeline-line { left: 50%; }
-        }
+        @media (min-width: 768px) { .timeline-line { left: 50%; } }
 
         .timeline-item-active .timeline-card {
-            background: rgba(6, 182, 212, 0.08) !important;
-            border-color: rgba(6, 182, 212, 0.6) !important;
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.15);
+            background: rgba(6,182,212,0.08) !important;
+            border-color: rgba(6,182,212,0.6) !important;
+            box-shadow: 0 0 30px rgba(6,182,212,0.15);
             transform: scale(1.03);
         }
+        @media (max-width: 768px) { .timeline-item-active .timeline-card { transform: scale(1.01); } }
 
         .timeline-item-active .timeline-dot {
             background: #06b6d4 !important;
-            box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.2), 0 0 20px #06b6d4;
+            box-shadow: 0 0 0 4px rgba(6,182,212,0.2), 0 0 20px #06b6d4;
             border-color: #fff !important;
+            transform: scale(1.4);
+            animation: dotPulse 2.2s ease-in-out infinite;
         }
 
-        .timeline-card {
-            transition: all 0.4s var(--smooth-curve);
+        @keyframes dotPulse {
+            0%, 100% { box-shadow: 0 0 0 4px rgba(6,182,212,0.2), 0 0 20px #06b6d4; }
+            50% { box-shadow: 0 0 0 8px rgba(6,182,212,0.35), 0 0 35px #06b6d4; }
         }
 
+        .timeline-card { 
+            transition: all 0.4s var(--smooth-curve); 
+            cursor: pointer; 
+        }
+        .timeline-card:active { transform: scale(0.97); transition: transform 0.1s ease; }
+        /* 悬停发光效果 */
+        .timeline-card:hover {
+            box-shadow: 0 0 25px rgba(6,182,212,0.35);
+            border-color: rgba(6,182,212,0.5);
+            transform: scale(1.04);
+        }
         .timeline-dot {
-            transition: all 0.4s var(--smooth-curve);
+            transition: all 0.25s var(--smooth-curve);
+            cursor: pointer;
+        }
+        .timeline-dot:hover {
+            transform: scale(1.5);
+            box-shadow: 0 0 0 6px rgba(6,182,212,0.3), 0 0 25px #06b6d4;
+            border-color: #fff;
+        }
+
+        /* 卡片悬停时节点的高亮样式 */
+        .dot-hover-glow {
+            transform: scale(1.5);
+            box-shadow: 0 0 0 6px rgba(6,182,212,0.3), 0 0 25px #06b6d4;
+            border-color: #fff;
+            animation: dotPulse 2.2s ease-in-out infinite;
         }
 
         .reveal {
-            opacity: 0;
-            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0; transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: transform, opacity;
         }
-        
         .reveal-left { transform: translateX(-40px); }
         .reveal-right { transform: translateX(40px); }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateX(0);
+        .reveal.active { opacity: 1; transform: translateX(0); }
+        @media (max-width: 768px) {
+            .reveal-left { transform: translateX(-20px); }
+            .reveal-right { transform: translateX(20px); }
+            .reveal.active { transform: translateX(0); }
         }
 
         .special-glow {
             color: #22d3ee !important;
-            filter: drop-shadow(0 0 3px rgba(34, 211, 238, 0.5));
-            border-color: rgba(34, 211, 238, 0.35) !important;
-            background: rgba(34, 211, 238, 0.08) !important;
+            filter: drop-shadow(0 0 3px rgba(34,211,238,0.5));
+            border-color: rgba(34,211,238,0.35) !important;
+            background: rgba(34,211,238,0.08) !important;
         }
 
-        .log-bullet {
-            display: inline-block;
-            color: #06b6d4;
-            margin-right: 0.5rem;
-            text-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
-        }
+        .log-bullet { display: inline-block; color: #06b6d4; margin-right: 0.5rem; text-shadow: 0 0 8px rgba(6,182,212,0.5); }
+        .content-scroll { max-height: 55vh; overflow-y: auto; padding-right: 0.5rem; scroll-behavior: smooth; }
+        @media (max-width: 768px) { .content-scroll { max-height: 40vh; padding-right: 0.25rem; } }
 
-        .content-scroll {
-            max-height: 50vh;
-            overflow-y: auto;
-            padding-right: 1rem;
-        }
-
-        .log-category {
-            margin-top: 1.5rem;
-        }
+        .log-category { margin-top: 1.5rem; }
+        .log-category:first-child { margin-top: 0; }
         .log-category-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #06b6d4;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; font-weight: 700;
+            color: #06b6d4; letter-spacing: 0.1em; text-transform: uppercase;
+            margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;
         }
         .log-category-title::after {
-            content: '';
-            flex-grow: 1;
-            height: 1px;
-            background: linear-gradient(to right, rgba(6, 182, 212, 0.3), transparent);
-            margin-left: 1rem;
+            content: ''; flex-grow: 1; height: 1px;
+            background: linear-gradient(to right, rgba(6,182,212,0.3), transparent);
         }
-        .log-list {
-            padding-left: 0.5rem;
-            border-left: 1px solid rgba(255, 255, 255, 0.05);
-        }
+        .log-list { padding-left: 0.5rem; border-left: 1px solid rgba(255,255,255,0.05); }
 
-        /* Footer 樣式調整 */
+        .perf-mini-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; font-family: 'JetBrains Mono', monospace; margin-top: 0.5rem; border-radius: 8px; overflow: hidden; }
+        .perf-mini-table th { background: rgba(6,182,212,0.1); color: #06b6d4; padding: 10px 12px; text-align: left; font-weight: 700; letter-spacing: 0.04em; border-bottom: 1px solid rgba(6,182,212,0.3); font-size: 0.75rem; white-space: nowrap; }
+        .perf-mini-table td { padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); color: #cbd5e1; white-space: nowrap; font-size: 0.8rem; }
+        .perf-mini-table .val-good { color: #3fb950; font-weight: 700; }
+        .perf-mini-table .val-ok { color: #d4a853; font-weight: 600; }
+        .perf-mini-table .val-bad { color: #f85149; font-weight: 600; }
+        .perf-mini-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); }
+
+        .achievement-list { display: grid; grid-template-columns: 1fr; gap: 4px; }
+        @media (min-width: 640px) { .achievement-list { grid-template-columns: 1fr 1fr; } }
+        .achievement-item {
+            display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 8px;
+            font-size: 0.85rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04);
+            color: #b0b8c4; line-height: 1.4;
+        }
+        .achievement-item i { flex-shrink: 0; width: 16px; height: 16px; color: #06b6d4; }
+
         .footer-module {
-            padding: 5rem 1rem 4rem 1rem;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-            background-color: var(--bg-dark);
-            color: #ffffff;
-            position: relative;
+            padding: 5rem 1rem 4rem 1rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.03);
+            background-color: var(--bg-dark); color: #ffffff; position: relative;
         }
-
-        .footer-module .footer-brand {
-            font-family: 'Ma Shan Zheng', cursive;
-            font-size: 28px;
-            margin-bottom: 1rem;
-            opacity: 0.35;
-            letter-spacing: 3px;
-        }
-
-        .footer-module .cyber-blue-text {
-            color: #06b6d4;
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
-        }
-
-        .footer-module .footer-text {
-            font-size: 13px;
-            line-height: 1.8;
-            letter-spacing: 0.12em;
-            max-width: 800px;
-            margin: 0 auto;
-            text-transform: uppercase;
-            opacity: 0.6;
-        }
-
-        .footer-module .footer-legal {
-            margin-top: 1.2rem;
-            font-size: 10px;
-            color: #64748b;
-            letter-spacing: 0.05em;
-            opacity: 0.5;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
+        .footer-module .footer-brand { font-family: 'Ma Shan Zheng', cursive; font-size: 28px; margin-bottom: 1rem; opacity: 0.35; letter-spacing: 3px; }
+        .footer-module .cyber-blue-text { color: #06b6d4; text-shadow: 0 0 10px rgba(6,182,212,0.3); }
+        .footer-module .footer-text { font-size: 13px; line-height: 1.8; letter-spacing: 0.12em; max-width: 800px; margin: 0 auto; text-transform: uppercase; opacity: 0.6; }
+        .footer-module .footer-legal { margin-top: 1.2rem; font-size: 10px; color: #64748b; letter-spacing: 0.05em; opacity: 0.5; max-width: 600px; margin-left: auto; margin-right: auto; }
         @media (max-width: 768px) {
-            .footer-module .footer-brand {
-                font-size: 22px;
-            }
-            .footer-module .footer-text {
-                font-size: 11px;
-                padding: 0 1rem;
-            }
+            .footer-module .footer-brand { font-size: 22px; }
+            .footer-module .footer-text { font-size: 11px; padding: 0 1rem; }
         }
     </style>
 </head>
 <body class="bg-[#050507]">
 
-    <!-- 主葉(葉子)按鈕：已更新連結位址 -->
-    <a href="https://cyc-whld.github.io/MC-Server-C08/index.html" class="fixed-home group flex items-center gap-3 px-5 py-2.5 bg-black/40 border border-white/10 rounded-xl hover:bg-cyan-500/20 hover:border-cyan-500/50 hover:scale-105 transition-all active:scale-95">
+    <button onclick="window.location.href='https://cyc-whld.github.io/MC-Server-C08/'" class="fixed-home group px-5 py-2.5 bg-black/40 border border-white/10 rounded-xl hover:bg-cyan-500/20 hover:border-cyan-500/50 hover:scale-105 transition-all active:scale-95">
         <i data-lucide="home" class="text-slate-400 group-hover:text-cyan-400 w-5 h-5"></i>
         <span class="text-xs font-mono font-bold text-slate-400 group-hover:text-white tracking-widest">主頁</span>
-    </a>
+    </button>
 
-    <nav id="navbar" class="w-full h-20 md:h-24 border-b border-white/5 bg-black/60 backdrop-blur-xl z-[100] flex items-center justify-between px-6 md:px-12 fixed top-0 left-0">
-        <div class="flex items-center h-full">
-            <div class="hidden sm:flex p-3 bg-white/5 rounded-xl border border-white/10 shadow-lg mr-4">
-                <i data-lucide="file-text" class="text-cyan-500 w-6 h-6"></i>
+    <nav id="navbar" class="w-full h-16 md:h-20 border-b border-white/5 bg-black/60 backdrop-blur-xl z-[100] flex items-center justify-between px-4 md:px-10 fixed top-0 left-0">
+        <div class="flex items-center h-full gap-2 md:gap-4 cursor-pointer" onclick="window.location.href='https://cyc-whld.github.io/MC-Server-C08/'">
+            <div class="hidden sm:flex p-2 md:p-3 bg-white/5 rounded-xl border border-white/10 shadow-lg shrink-0">
+                <i data-lucide="file-text" class="text-cyan-500 w-5 h-5 md:w-6 md:h-6"></i>
             </div>
-            <div class="flex items-center">
-                <span class="font-shan text-2xl sm:text-4xl md:text-[3rem] text-white tracking-tight leading-none">山岳礦工藝</span>
-                <div class="flex items-center ml-4">
-                    <div class="w-px h-10 bg-white/10"></div>
-                    <div class="flex flex-col ml-4">
-                        <span class="font-shan text-xl sm:text-2xl text-cyan-500 leading-none">伺服器檔案庫</span>
-                        <span class="text-[9px] font-mono text-cyan-500/40 tracking-widest mt-1">SYSTEM_V 0.0.0</span>
-                    </div>
+            <div class="flex items-center gap-2 md:gap-4 min-w-0">
+                <span class="font-shan text-xl sm:text-3xl md:text-[2.5rem] text-white tracking-tight leading-none whitespace-nowrap">山岳礦工藝</span>
+                <div class="hidden sm:block w-px h-8 md:h-10 bg-white/10 shrink-0"></div>
+                <div class="hidden sm:flex flex-col shrink-0">
+                    <span class="font-shan text-lg sm:text-xl md:text-2xl text-cyan-500 leading-none whitespace-nowrap">伺服器檔案庫</span>
+                    <span class="text-[8px] md:text-[9px] font-mono text-cyan-500/40 tracking-widest mt-0.5">SYSTEM_V 6.22</span>
                 </div>
             </div>
         </div>
-        <div class="w-32 hidden md:block"></div>
+        <div class="w-16 md:w-24 shrink-0"></div>
     </nav>
 
-    <section class="min-h-screen pt-24 flex flex-col md:flex-row overflow-hidden">
-        <aside class="w-full md:w-80 lg:w-[380px] border-b md:border-b-0 md:border-r border-white/5 bg-black/20 flex flex-col max-h-[85vh] md:max-h-screen relative z-40">
-            <div class="p-6 pb-2">
-                <div class="relative mb-6">
-                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 w-4 h-4"></i>
-                    <input type="text" id="search-input" placeholder="搜尋代號或日期..." 
-                        class="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-6 text-sm focus:border-cyan-500/40 transition-all text-white placeholder:text-slate-700 outline-none">
+    <section class="min-h-screen pt-16 md:pt-20 flex flex-col md:flex-row overflow-hidden">
+        <aside class="w-full md:w-72 lg:w-[380px] border-b md:border-b-0 md:border-r border-white/5 bg-black/20 flex flex-col max-h-[40vh] md:max-h-[calc(100vh-80px)] relative z-40 shrink-0">
+            <div class="p-4 md:p-6 pb-1 md:pb-2">
+                <div class="relative mb-4 md:mb-6">
+                    <i data-lucide="search" class="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-slate-600 w-3.5 h-3.5 md:w-4 md:h-4"></i>
+                    <input type="text" id="search-input" placeholder="搜尋代號或日期..."
+                    class="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 md:py-3 pl-10 md:pl-12 pr-4 md:pr-6 text-sm focus:border-cyan-500/40 transition-all text-white placeholder:text-slate-700 outline-none">
                 </div>
-                <div class="grid grid-cols-4 gap-2 mb-6" id="filter-container"></div>
+                <div class="filter-container mb-4 md:mb-6" id="filter-container"></div>
             </div>
-            <div id="card-list" class="flex-grow overflow-y-auto px-6 pb-12 space-y-4"></div>
+            <div id="card-list" class="flex-grow overflow-y-auto px-4 md:px-6 pb-8 md:pb-12 space-y-3 md:space-y-4 pt-1"></div>
         </aside>
 
-        <main class="flex-grow bg-[#070709] relative flex flex-col">
-            <div class="w-full max-w-6xl mx-auto px-8 md:px-16 pt-12 pb-4 z-30 flex justify-between items-end">
-                <div>
-                    <div class="text-cyan-500/50 font-mono text-[10px] tracking-[0.4em] mb-2 uppercase">Core_Data_Access</div>
-                    <h2 class="text-white text-3xl font-black tracking-tighter" id="display-title-main">搜索中...</h2>
+        <main class="flex-grow bg-[#070709] relative flex flex-col min-h-[50vh] md:min-h-0">
+            <div class="w-full max-w-6xl mx-auto px-4 md:px-12 pt-6 md:pt-10 pb-2 z-30 flex justify-between items-end">
+                <div class="min-w-0">
+                    <div class="text-cyan-500/50 font-mono text-[9px] md:text-[10px] tracking-[0.3em] md:tracking-[0.4em] mb-1 md:mb-2 uppercase">Core_Data_Access</div>
+                    <h2 class="text-white text-xl md:text-3xl font-black tracking-tighter truncate" id="display-title-main">搜索中...</h2>
                 </div>
-                <div class="px-6 py-2 bg-white/[0.03] border border-white/5 rounded-xl text-cyan-500 font-mono text-lg font-bold" id="display-year">2026</div>
+                <div class="px-3 md:px-6 py-1.5 md:py-2 bg-white/[0.03] border border-white/5 rounded-xl text-cyan-500 font-mono text-base md:text-lg font-bold shrink-0 ml-3" id="display-year">2026</div>
             </div>
-            <div id="detail-scroll" class="flex-grow flex items-center justify-center p-8 md:p-16 relative z-20">
+            <div id="detail-scroll" class="flex-grow flex items-center justify-center p-4 md:p-12 relative z-20">
                 <div id="detail-content" class="w-full max-w-4xl"></div>
             </div>
         </main>
     </section>
 
-    <section class="min-h-screen relative py-20 px-6 flex flex-col items-center bg-[#050507]">
+    <section class="min-h-screen relative py-16 md:py-20 px-4 md:px-6 flex flex-col items-center bg-[#050507]">
         <div class="absolute top-0 w-px h-full timeline-line"></div>
-        <div class="relative z-10 mb-16 text-center">
-            <h2 class="text-5xl md:text-7xl font-black text-white tracking-tighter mb-4">伺服器日誌</h2>
-            <p class="text-cyan-500 font-mono text-sm tracking-[0.8em] opacity-60">SERVER_TIMELINE</p>
+        <div class="relative z-10 mb-10 md:mb-16 text-center">
+            <h2 class="text-4xl md:text-7xl font-black text-white tracking-tighter mb-2 md:mb-4">伺服器日誌</h2>
+            <p class="text-cyan-500 font-mono text-xs md:text-sm tracking-[0.5em] md:tracking-[0.8em] opacity-60">SERVER_TIMELINE</p>
         </div>
-        <div id="time-tree-container" class="w-full max-w-5xl space-y-3 md:space-y-2 relative pb-20"></div>
+        <div id="time-tree-container" class="w-full max-w-5xl space-y-2 md:space-y-2 relative pb-16 md:pb-20"></div>
     </section>
 
     <footer class="footer-module">
@@ -322,56 +308,214 @@
 
     <script>
         const changelogData = [
+            {
+                id: '29', date: '2026-06-22', title: '傷害假人更新暨鍛刀平衡更新', tags: ['新增', '平衡', '系統', '鍛造'],
+                content: `
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="target" class="w-4 h-4 inline-block text-cyan-400"></i> 傷害假人系統</div>
+                    <div class="log-list">
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span>蹲下+左鍵點擊腳底即可破壞假人</div>
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span>配方：任意玩家頭顱 + 2x黃色旗幟 + 標靶</div>
+                        <div class="text-slate-400 text-xs mb-1">未來補上：破圖材質、10秒DPS計算、穿裝備與特殊效果、更換皮膚</div>
+                        <div class="text-slate-500 text-xs">感謝 InperialStorm 提供大家毆打</div>
+                    </div>
+                </div>
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="hammer" class="w-4 h-4 inline-block text-cyan-400"></i> 鍛刀平衡性調整</div>
+                    <div class="log-list">
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>水淬完美溫度改為標準溫度 <span class="text-cyan-400 font-bold">±2</span>（共5個整數）</div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>精煉油完美溫度改為標準溫度 <span class="text-cyan-400 font-bold">±3</span>（共7個整數）</div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>刀胚放置降溫期望值：每秒2（條件） / 每秒1</div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>鐵鎚敲擊降溫僅在100度以上作用</div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>調低失誤分數範圍的扣分倍率</div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>新增降溫方法：手持刷子右鍵加速降溫（機率扣耐久）</div>
+                        <div class="text-slate-300"><span class="log-bullet">●</span>副手持雪球可大量降溫（不超過10度），消耗雪球</div>
+                    </div>
+                </div>
+                `
+            },
+            {
+                id: '28', date: '2026-05-31', title: '大麻、鍛刀平衡性更新', tags: ['平衡', '更新', '新增', '鍛造', '醫療'],
+                content: `
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="package" class="w-4 h-4 inline-block text-cyan-400"></i> 新增物品</div>
+                    <div class="log-list">
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span><span class="text-cyan-400 font-bold">小熊軟糖</span> — 於化學工作台合成（若未看見請打掉重放）</div>
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span><span class="text-cyan-400 font-bold">爆米香大砲</span> — 需32個大麻種子，普通營火5分鐘加熱（靈魂營火減半）</div>
+                        <div class="text-slate-300"><span class="log-bullet">●</span><span class="text-cyan-400 font-bold">大麻爆米香</span> — 大麻餅乾 Pro Max 版，蹲下+左鍵從營火上破壞</div>
+                    </div>
+                </div>
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="scale" class="w-4 h-4 inline-block text-cyan-400"></i> 鍛刀平衡</div>
+                    <div class="log-list">
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>刀劍鋒利度運算從<span class="text-cyan-400">加成運算</span>改為<span class="text-cyan-400">乘法運算</span></div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>不同刀形間的傷害差距擴大</div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>更改刀坯的基礎鋒利度值</div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>專家以上鍛刀者可看見更多資訊</div>
+                        <div class="text-slate-300"><span class="log-bullet">●</span>新增技能：大劍「守護之盾（輕）」、大劍「震地裂擊（重）」、打刀「拔刀斬（重）」</div>
+                    </div>
+                </div>
+                `
+            },
+            {
+                id: '27', date: '2026-05-25', title: '傳送石碑改版', tags: ['更新', '系統'],
+                content: `
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="monument" class="w-4 h-4 inline-block text-cyan-400"></i> 新版傳送石碑</div>
+                    <div class="log-list">
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span>蹲下點擊進入設定模式（<span class="text-cyan-400 font-bold">僅擁有者</span>）</div>
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span>自動搜尋約可容納 <span class="text-cyan-400 font-bold">12×6 = 72個格子</span></div>
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span>石碑放出後自動綁定擁有者網域</div>
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span>個人網域可隨時切換，切換後記得同步石碑</div>
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span>建議汰換時在家中留一個舊版，方便傳送至偏遠地方</div>
+                        <div class="text-slate-500 text-xs flex items-center gap-1"><i data-lucide="info" class="w-3 h-3 inline-block text-slate-500"></i> 若想偷偷藏地點，記得在設定介面把網域拔除</div>
+                    </div>
+                </div>
+                `
+            },
+            {
+                id: '26', date: '2026-05-10', title: '更新綠寶石銀行', tags: ['更新', '銀行', '系統'],
+                content: `
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="trophy" class="w-4 h-4 inline-block text-cyan-400"></i> 新增成就</div>
+                    <div class="achievement-list">
+                        <div class="achievement-item"><i data-lucide="trophy"></i> 勞斯萊斯幻想 — 儲存1綠寶石</div>
+                        <div class="achievement-item"><i data-lucide="trophy"></i> 隨身攜帶貴重物品 — 儲存1,000綠寶石</div>
+                        <div class="achievement-item"><i data-lucide="trophy"></i> 林宜慶大少爺 — 儲存1萬綠寶石</div>
+                        <div class="achievement-item"><i data-lucide="trophy"></i> 勞斯萊斯幻影 — 儲存10萬綠寶石</div>
+                        <div class="achievement-item"><i data-lucide="trophy"></i> 中央銀行 — 儲存超過50萬綠寶石</div>
+                        <div class="achievement-item"><i data-lucide="trophy"></i> 美元霸權 — 儲存100萬綠寶石</div>
+                        <div class="achievement-item"><i data-lucide="badge"></i> 羊金錢 — 轉帳給allen</div>
+                        <div class="achievement-item"><i data-lucide="heart-handshake"></i> 香油錢 — 轉帳給服主或創世神任意金額</div>
+                        <div class="achievement-item"><i data-lucide="landmark"></i> 政治獻金 — 轉帳給經濟部長210萬綠寶石</div>
+                    </div>
+                </div>
+                `
+            },
+            {
+                id: '25', date: '2026-05-09',
+                title: '升級到26.1.2<br>新增伺服器端JEI、WTHIT',
+                tags: ['更新', '伺服器', '模組'],
+                content: '<div class="log-category"><div class="log-category-title"><i data-lucide="arrow-up-circle" class="w-4 h-4 inline-block text-cyan-400"></i> 版本升級</div><div class="log-list"><div class="text-slate-300"><span class="log-bullet">●</span>伺服器版本升級至 <span class="text-cyan-400 font-bold">26.1.2</span></div></div></div><div class="log-category"><div class="log-category-title"><i data-lucide="puzzle" class="w-4 h-4 inline-block text-cyan-400"></i> 新增模組</div><div class="log-list"><div class="text-slate-300"><span class="log-bullet">●</span>新增伺服器端JEI與WTHIT模組，提升玩家便利性</div></div></div>'
+            },
+            {
+                id: '24', date: '2026-05-07', title: '新增綠寶石銀行', tags: ['新增', '銀行', '系統'],
+                content: `
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="vault" class="w-4 h-4 inline-block text-cyan-400"></i> 功能說明</div>
+                    <div class="log-list">
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span>只能儲存<span class="text-cyan-400 font-bold">一般綠寶石</span></div>
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span>可轉帳，轉帳代碼與TPA代碼相同</div>
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span>收款人離線時，上線後收到入帳通知</div>
+                        <div class="text-slate-500 text-xs flex items-center gap-1"><i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-yellow-400"></i> 轉帳錯人本功能一概不負責，請仔細檢查對方銀行帳號</div>
+                    </div>
+                </div>
+                `
+            },
+            {
+                id: '23', date: '2026-04-22', title: '新增通用菜單、TPA介面更改', tags: ['新增', '更新', '系統'],
+                content: `
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="menu" class="w-4 h-4 inline-block text-cyan-400"></i> 菜單替代物</div>
+                    <div class="log-list">
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span>為基岩版玩家提供方便，手持右鍵即可有Java版G鍵相同效果</div>
+                    </div>
+                </div>
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="arrow-right-left" class="w-4 h-4 inline-block text-cyan-400"></i> TPA介面更改</div>
+                    <div class="log-list">
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span>自動搜尋移至最上方，方便選擇</div>
+                        <div class="text-slate-300 mb-2"><span class="log-bullet">●</span>增加「回應傳送邀請」按鈕（基岩版必須使用此方案）</div>
+                    </div>
+                </div>
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="wrench" class="w-4 h-4 inline-block text-cyan-400"></i> 修復</div>
+                    <div class="log-list">
+                        <div class="text-slate-300"><span class="log-bullet">●</span>修復精煉爐無法正常生產精煉油的問題</div>
+                    </div>
+                </div>
+                `
+            },
+            {
+                id: '22', date: '2026-04-18', title: '大麻運算優化', tags: ['優化', '更新', '醫療'],
+                content: `
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="cpu" class="w-4 h-4 inline-block text-cyan-400"></i> 效能測試數據（R9 9900X · 12GB RAM）</div>
+                    <div class="perf-mini-table-wrap">
+                        <table class="perf-mini-table">
+                            <thead><tr><th>測試組別</th><th>CPU</th><th>RAM最大</th><th>延遲</th><th>體感</th></tr></thead>
+                            <tbody>
+                                <tr><td>原算法</td><td class="val-ok">22%</td><td class="val-ok">7.2GB</td><td class="val-bad">18ms</td><td>明顯鈍感</td></tr>
+                                <tr><td><strong>新算法</strong></td><td class="val-good">20%</td><td class="val-good">5.4GB</td><td class="val-good">8ms</td><td>少有鈍感</td></tr>
+                                <tr><td>停止大麻運算</td><td class="val-good">20%</td><td class="val-good">5.2GB</td><td class="val-good">8ms</td><td>順暢</td></tr>
+                                <tr><td>消除大麻實體</td><td class="val-good">21%</td><td class="val-good">4.8GB</td><td class="val-good">6ms</td><td>順暢</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                `
+            },
+            { id: '21', date: '2026-04-15', title: '新增語音模組', tags: ['新增', '模組'], content: '<span class="log-bullet">●</span>伺服器端語音通訊模組上線，提升玩家互動體驗' },
+            { id: '20', date: '2026-04-03', title: '新增網路優化模組', tags: ['新增', '優化', '模組'], content: '<span class="log-bullet">●</span>導入網路優化模組，改善連線品質與穩定性' },
+            {
+                id: '19', date: '2026-03-25', title: '新增毒品與醫藥系統', tags: ['新增', '系統', '醫療'],
+                content: `
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="flask" class="w-4 h-4 inline-block text-cyan-400"></i> 化學工作台 — 互動方式</div>
+                    <div class="log-list">
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>右鍵點擊類似釀造台的部件 → 放置原料</div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>右鍵點擊中間櫃子 → 放入玻璃瓶</div>
+                        <div class="text-slate-300"><span class="log-bullet">●</span>右鍵點擊左邊瓶子 → 開啟藥物裝配功能</div>
+                    </div>
+                </div>
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="beaker" class="w-4 h-4 inline-block text-cyan-400"></i> 精煉配方（燃料：烈焰粉）</div>
+                    <div class="log-list">
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>4x大麻葉 → 大麻脂</div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>64x罌粟花 → 鴉片膏（100%）、納洛酮（25%）</div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>1x鴉片膏 → 嗎啡（需玻璃瓶）</div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>1x嗎啡 → 海洛因</div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>16x牛肉 → 腎上腺素</div>
+                        <div class="text-slate-300"><span class="log-bullet">●</span>4x樺木原木 → 水楊酸</div>
+                    </div>
+                </div>
+                <div class="log-category">
+                    <div class="log-category-title"><i data-lucide="sprout" class="w-4 h-4 inline-block text-cyan-400"></i> 大麻種植條件</div>
+                    <div class="log-list">
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>需「大麻種子」種植在「灰燼土」上，植株為兩格高</div>
+                        <div class="text-slate-300 mb-1"><span class="log-bullet">●</span>需「紫色蛙光體」於第三格高提供光照</div>
+                        <div class="text-slate-300"><span class="log-bullet">●</span>約30分鐘成年，右鍵採收1~3個大麻葉</div>
+                    </div>
+                </div>
+                `
+            },
+            { id: '18', date: '2026-03-24', title: '資源包更新', tags: ['更新', '資源包'], content: '<span class="log-bullet">●</span>資源包內容更新' },
+            { id: '17', date: '2026-03-22', title: '資源包更新', tags: ['更新', '資源包'], content: '<span class="log-bullet">●</span>資源包內容更新' },
+            { id: '16', date: '2026-03-17', title: '增加優化、基岩連線、預加載模組', tags: ['優化', '更新', '模組'], content: '<span class="log-bullet">●</span>伺服器效能優化<br><span class="log-bullet">●</span>支援基岩版連線<br><span class="log-bullet">●</span>加入預加載模組' },
             { id: '15', date: '2026-03-15', title: '切換核心', tags: ['更新', '伺服器'], content: '將原版server核心切換至模組服Fabric核心' },
-            { id: '14', date: '2026-03-14', title: '更新資源包', tags: ['更新'], content: '將近期新增材質包更新' },
+            { id: '14', date: '2026-03-14', title: '更新資源包', tags: ['更新', '資源包'], content: '將近期新增材質包更新' },
             { id: '13', date: '2026-03-13', title: '問題優化', tags: ['修復'], content: '修復了伏聆獄髓的錯誤顯示' },
             { id: '12', date: '2026-03-09', title: '新增特殊技能、問題更新', tags: ['新增', '修復'], content: '新增刀具特殊技能<br><span class="log-bullet">●</span>修復了刀柄的特殊技能異常' },
-            { id: '11', date: '2026-03-08', title: '新增資源包、物品', tags: ['新增', '修復'], content: '新增308資源包<br><span class="log-bullet">●</span>新增獄髓剪刀<br><span class="log-bullet">●</span>修復了部分物品手持顯示異常' },
-            { id: '10', date: '2026-03-07', title: '問題更新、新增物品', tags: ['修復', '新增'], 
-              content: `
+            { id: '11', date: '2026-03-08', title: '新增資源包、物品', tags: ['新增', '修復', '資源包'], content: '新增308資源包<br><span class="log-bullet">●</span>新增獄髓剪刀<br><span class="log-bullet">●</span>修復了部分物品手持顯示異常' },
+            {
+                id: '10', date: '2026-03-07', title: '問題更新、新增物品', tags: ['修復', '新增'],
+                content: `
                 <div class="log-category">
-                    <div class="log-category-title">修復內容</div>
-                    <div class="log-list">
-                        <div class="text-slate-300 text-sm mb-2"><span class="log-bullet">●</span>修復了已知的BUG</div>
-                    </div>
+                    <div class="log-category-title"><i data-lucide="wrench" class="w-4 h-4 inline-block text-cyan-400"></i> 修復內容</div>
+                    <div class="log-list"><div class="text-slate-300 mb-2"><span class="log-bullet">●</span>修復了已知的BUG</div></div>
                 </div>
                 <div class="log-category">
-                    <div class="log-category-title">更新內容</div>
+                    <div class="log-category-title"><i data-lucide="package" class="w-4 h-4 inline-block text-cyan-400"></i> 更新內容</div>
                     <div class="log-list space-y-4">
-                        <div>
-                            <div class="text-cyan-500/80 text-[10px] font-bold mb-1 uppercase tracking-wider">工作檯類</div>
-                            <div class="text-slate-400 text-sm">鍛造工作台、打磨與裝配台、精煉爐、Replicater</div>
-                        </div>
-                        <div>
-                            <div class="text-cyan-500/80 text-[10px] font-bold mb-1 uppercase tracking-wider">工具類</div>
-                            <div class="text-slate-400 text-sm">鐵製鍛造槌、鑽石製鍛造槌、獄髓製鍛造槌<br>獄髓劈斧、獄髓工兵鏟、獄髓鶴嘴斧、獄髓礦脈錘</div>
-                        </div>
-                        <div>
-                            <div class="text-cyan-500/80 text-[10px] font-bold mb-1 uppercase tracking-wider">金屬礦物類</div>
-                            <div class="text-slate-400 text-sm leading-relaxed">
-                                青銅錠、鋼錠、彈簧鋼錠、高碳鋼、大馬士革鋼<br>
-                                魔法粉塵、粗油、深海獄髓合金、伏聆獄髓合金、紫鋼
-                            </div>
-                        </div>
-                        <div>
-                            <div class="text-cyan-500/80 text-[10px] font-bold mb-1 uppercase tracking-wider">武器類</div>
-                            <div class="text-slate-400 text-sm">鞭子</div>
-                        </div>
-                        <div>
-                            <div class="text-cyan-500/80 text-[10px] font-bold mb-1 uppercase tracking-wider">刀柄材料</div>
-                            <div class="text-slate-400 text-sm leading-relaxed">
-                                各式原木的剝皮版、線、皮革、竹子<br>
-                                剝皮櫻花木、剝皮緋紅蕈柄、剝皮扭曲蕈柄<br>
-                                樹酯磚頭、骨頭、山羊角、鸚鵡螺殼、綠寶石
-                            </div>
-                        </div>
-                        <div>
-                            <div class="text-cyan-500/80 text-[10px] font-bold mb-1 uppercase tracking-wider">淬火與打磨材料</div>
-                            <div class="text-slate-400 text-sm">水、粗油、精煉油、油</div>
-                        </div>
+                        <div><div class="text-cyan-500/80 text-[10px] font-bold mb-1 uppercase tracking-wider">工作檯類</div><div class="text-slate-400">鍛造工作台、打磨與裝配台、精煉爐、Replicater</div></div>
+                        <div><div class="text-cyan-500/80 text-[10px] font-bold mb-1 uppercase tracking-wider">工具類</div><div class="text-slate-400">鐵製鍛造槌、鑽石製鍛造槌、獄髓製鍛造槌<br>獄髓劈斧、獄髓工兵鏟、獄髓鶴嘴斧、獄髓礦脈錘</div></div>
+                        <div><div class="text-cyan-500/80 text-[10px] font-bold mb-1 uppercase tracking-wider">金屬礦物類</div><div class="text-slate-400 leading-relaxed">青銅錠、鋼錠、彈簧鋼錠、高碳鋼、大馬士革鋼<br>魔法粉塵、粗油、深海獄髓合金、伏聆獄髓合金、紫鋼</div></div>
+                        <div><div class="text-cyan-500/80 text-[10px] font-bold mb-1 uppercase tracking-wider">武器類</div><div class="text-slate-400">鞭子</div></div>
+                        <div><div class="text-cyan-500/80 text-[10px] font-bold mb-1 uppercase tracking-wider">刀柄材料</div><div class="text-slate-400 leading-relaxed">各式原木的剝皮版、線、皮革、竹子<br>剝皮櫻花木、剝皮緋紅蕈柄、剝皮扭曲蕈柄<br>樹酯磚頭、骨頭、山羊角、鸚鵡螺殼、綠寶石</div></div>
+                        <div><div class="text-cyan-500/80 text-[10px] font-bold mb-1 uppercase tracking-wider">淬火與打磨材料</div><div class="text-slate-400">水、粗油、精煉油、油</div></div>
                     </div>
                 </div>
-              ` 
+                `
             },
             { id: '09', date: '2026-02-26', title: '緊急更新', tags: ['修復'], content: '修復了已知的BUG，由於有玩家在線使用此功能，因此當下立即更新。' },
             { id: '08', date: '2026-02-25', title: '版本更新', tags: ['更新'], content: '伺服器更新版本更新' },
@@ -385,88 +529,164 @@
             { id: '01', date: '2026-01-24', title: '開服', tags: ['開服'], content: '伺服器第一天正式營運' }
         ];
 
-        const tagIcons = { '更新': 'refresh-cw', '修復': 'wrench', '新增': 'plus-circle', '開服': 'power', '伺服器': 'server' };
-        let activeId = '10', filterType = '全部', searchQuery = '';
+        const tagIcons = {
+            '更新': 'refresh-cw', '修復': 'wrench', '新增': 'plus-circle', '開服': 'power',
+            '伺服器': 'server', '平衡': 'scale', '優化': 'zap', '資源包': 'package',
+            '系統': 'cpu', '銀行': 'landmark', '模組': 'puzzle', '醫療': 'cross',
+            '鍛造': 'hammer', '金融': 'landmark'
+        };
+        const tagGlowCategories = ['開服', '伺服器'];
+
+        let activeId = '29', filterType = '全部', searchQuery = '';
 
         let lastScrollTop = 0;
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > lastScrollTop && scrollTop > 50) navbar.classList.add('nav-hidden');
+            if (scrollTop > lastScrollTop && scrollTop > 60) navbar.classList.add('nav-hidden');
             else navbar.classList.remove('nav-hidden');
             lastScrollTop = scrollTop;
         });
 
         function renderFilters() {
-            const options = [{ label: '全部', icon: 'layout-grid' }, { label: '更新', icon: 'refresh-cw' }, { label: '修復', icon: 'wrench' }, { label: '新增', icon: 'plus-circle' }];
-            document.getElementById('filter-container').innerHTML = options.map(opt => `
-                <button onclick="setFilter('${opt.label}')" class="filter-btn flex flex-col items-center justify-center py-3 rounded-xl border ${filterType === opt.label ? 'active' : 'bg-white/5 border-white/10 text-slate-500 hover:border-white/20'}">
-                    <i data-lucide="${opt.icon}" class="w-4 h-4 mb-1.5"></i>
-                    <span class="text-[9px] font-bold tracking-tighter">${opt.label}</span>
-                </button>
-            `).join('');
+            const rows = [
+                [{ label: '全部', icon: 'layout-grid' }],
+                [
+                    { label: '新增', icon: 'plus-circle' }, { label: '優化', icon: 'zap' },
+                    { label: '修復', icon: 'wrench' }, { label: '更新', icon: 'refresh-cw' }
+                ],
+                [
+                    { label: '平衡', icon: 'scale' }, { label: '系統', icon: 'cpu' },
+                    { label: '模組', icon: 'puzzle' }, { label: '醫療', icon: 'cross' }
+                ],
+                [
+                    { label: '開服', icon: 'power' }, { label: '資源包', icon: 'package' },
+                    { label: '鍛造', icon: 'hammer' }, { label: '金融', icon: 'landmark' }
+                ]
+            ];
+            const container = document.getElementById('filter-container');
+            container.innerHTML = rows.map((row, index) => {
+                const rowClass = index === 0 ? '' : 'filter-row-hidden';
+                const cols = row.length === 1 ? 'grid-cols-1' : 'grid-cols-4';
+                return `<div class="grid ${cols} gap-1.5 md:gap-2 mb-2 ${rowClass}">
+                    ${row.map(btn => `
+                        <button onclick="setFilter('${btn.label}')" class="filter-btn flex flex-col items-center justify-center py-2 md:py-3 rounded-xl border ${filterType === btn.label ? 'active' : 'bg-white/5 border-white/10 text-slate-500 hover:border-white/20'}">
+                            <i data-lucide="${btn.icon}" class="w-3.5 h-3.5 md:w-4 md:h-4 mb-1 md:mb-1.5"></i>
+                            <span class="text-[8px] md:text-[9px] font-bold tracking-tighter">${btn.label}</span>
+                        </button>
+                    `).join('')}
+                </div>`;
+            }).join('');
             lucide.createIcons();
         }
 
-        function renderCardList() {
-            const filtered = changelogData.filter(log => {
-                const mType = filterType === '全部' || log.tags.some(tag => tag === filterType);
-                const mSearch = log.title.toLowerCase().includes(searchQuery.toLowerCase()) || log.date.includes(searchQuery);
-                return mType && mSearch;
-            });
+        function matchesFilter(log) {
+            if (filterType === '全部') return true;
+            const map = { '醫療': '醫療', '鍛造': '鍛造', '金融': '銀行', '系統': ['系統', '銀行', '模組'] };
+            if (map[filterType]) {
+                const targets = Array.isArray(map[filterType]) ? map[filterType] : [map[filterType]];
+                return log.tags.some(t => targets.includes(t));
+            }
+            return log.tags.some(tag => tag === filterType);
+        }
 
-            document.getElementById('card-list').innerHTML = filtered.map(log => {
+        function renderCardList() {
+            const filtered = changelogData.filter(log => matchesFilter(log) && (log.title.toLowerCase().includes(searchQuery.toLowerCase()) || log.date.includes(searchQuery)));
+            const listEl = document.getElementById('card-list');
+            listEl.innerHTML = filtered.map(log => {
                 const isActive = activeId === log.id;
+                const allTags = [...log.tags];
+                const tagCount = allTags.length;
+
+                let tagsHtml = '';
+                if (tagCount <= 2) {
+                    tagsHtml = `<div class="flex flex-col gap-1">${allTags.map(tag => renderTagIcon(tag, isActive)).join('')}</div>`;
+                } else if (tagCount === 3) {
+                    tagsHtml = `
+                        <div class="flex gap-1 items-center">
+                            <div class="flex flex-col gap-1">${renderTagIcon(allTags[2], isActive)}</div>
+                            <div class="flex flex-col gap-1">${renderTagIcon(allTags[0], isActive)}${renderTagIcon(allTags[1], isActive)}</div>
+                        </div>`;
+                } else {
+                    tagsHtml = `<div class="grid grid-cols-2 gap-1">${allTags.slice(0,4).map(tag => renderTagIcon(tag, isActive)).join('')}</div>`;
+                }
+
                 return `
-                    <div onclick="setActive('${log.id}')" class="list-card p-5 rounded-2xl cursor-pointer border relative group ${isActive ? 'card-active' : 'bg-white/[0.02] border-white/5 hover:border-white/10'}">
-                        <div class="flex flex-col">
-                            <span class="text-[10px] font-mono tracking-widest ${isActive ? 'text-cyan-400' : 'text-slate-600'} mb-1">${log.date}</span>
-                            <span class="font-bold text-sm tracking-tight ${isActive ? 'text-white' : 'text-slate-400'} max-w-[80%]">${log.title}</span>
-                        </div>
-                        <div class="tag-stack absolute top-4 right-4 flex flex-col gap-1 items-center">
-                            ${log.tags.map(tag => `
-                                <div class="w-6 h-6 flex items-center justify-center rounded-md border transition-all duration-300 ${(tag === '開服' || tag === '伺服器') ? 'special-glow' : (isActive ? 'bg-cyan-500/20 border-cyan-400/40 text-cyan-400' : 'bg-white/5 border-white/10 text-slate-600')}">
-                                    <i data-lucide="${tagIcons[tag] || 'hash'}" class="w-3.5 h-3.5"></i>
-                                </div>
-                            `).join('')}
-                        </div>
+                <div onclick="setActive('${log.id}')" class="list-card p-4 md:p-5 rounded-2xl border relative group ${isActive ? 'card-active' : 'bg-white/[0.02] border-white/5 hover:border-white/10'}">
+                    <div class="flex flex-col pr-14">
+                        <span class="text-[9px] md:text-[10px] font-mono tracking-widest ${isActive ? 'text-cyan-400' : 'text-slate-600'} mb-1">${log.date}</span>
+                        <span class="font-bold text-xs md:text-sm tracking-tight ${isActive ? 'text-white' : 'text-slate-400'} line-clamp-2">${log.title}</span>
                     </div>
+                    <div class="absolute top-1/2 right-3 md:right-4 -translate-y-1/2">
+                        ${tagsHtml}
+                    </div>
+                </div>
                 `;
             }).join('');
             lucide.createIcons();
         }
 
+        function renderTagIcon(tag, isActive) {
+            const alwaysGlow = tagGlowCategories.includes(tag);
+            const glowClass = alwaysGlow ? 'special-glow' : (isActive ? 'bg-cyan-500/20 border-cyan-400/40 text-cyan-400' : 'bg-white/5 border-white/10 text-slate-600');
+            return `<div class="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center rounded-md border transition-all duration-300 ${glowClass}">
+                <i data-lucide="${tagIcons[tag] || 'hash'}" class="w-3.5 h-3.5 md:w-4 md:h-4"></i>
+            </div>`;
+        }
+
+        function scrollToTimelineItem(id) {
+            const target = document.getElementById(`timeline-item-${id}`);
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function updateTimelineHighlight() {
+            document.querySelectorAll('.time-tree-item').forEach(el => {
+                if (el.dataset.id === activeId) {
+                    el.classList.add('timeline-item-active');
+                } else {
+                    el.classList.remove('timeline-item-active');
+                }
+            });
+        }
+
+        function highlightDot(id) {
+            const dot = document.getElementById(`dot-${id}`);
+            if (dot) dot.classList.add('dot-hover-glow');
+        }
+        function unhighlightDot(id) {
+            const dot = document.getElementById(`dot-${id}`);
+            if (dot) dot.classList.remove('dot-hover-glow');
+        }
+
         function renderDetail() {
             const data = changelogData.find(l => l.id === activeId);
             if (!data) return;
-            document.getElementById('display-title-main').innerText = data.title;
+            document.getElementById('display-title-main').innerHTML = data.title;
             document.getElementById('display-year').innerText = data.date.split('-')[0];
-            
             document.getElementById('detail-content').innerHTML = `
-                <div class="detail-fade-in glass-panel p-8 md:p-12 rounded-[2.5rem] relative shadow-2xl overflow-hidden border-cyan-500/10">
-                    <div class="absolute -bottom-10 -right-10 opacity-[0.03]"><i data-lucide="${data.tags.includes('開服') ? 'power' : (data.tags.includes('伺服器') ? 'server' : 'file-text')}" class="w-80 h-80"></i></div>
-                    <div class="relative z-10 space-y-6">
-                        <div class="flex items-center gap-4">
-                            ${data.tags.map(tag => `<span class="px-3 py-1 ${(tag === '開服' || tag === '伺服器') ? 'special-glow border' : 'bg-cyan-500/10 border border-cyan-500/30 text-cyan-400'} text-[10px] font-bold rounded uppercase">${tag}</span>`).join('')}
-                            <span class="w-1 h-1 rounded-full bg-slate-700"></span>
-                            <span class="text-slate-500 font-mono text-xs">${data.date}</span>
-                        </div>
-                        <h2 class="text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">${data.title}</h2>
-                        <div class="h-px w-24 bg-cyan-500/50"></div>
-                        <div class="content-scroll">
-                            <div class="text-slate-400 leading-relaxed font-light">
-                                ${data.content.includes('log-category') ? data.content : `<span class="log-bullet">●</span>${data.content}`}
-                            </div>
-                        </div>
+            <div class="detail-fade-in glass-panel p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] relative shadow-2xl overflow-hidden border-cyan-500/10">
+                <div class="absolute -bottom-10 -right-10 opacity-[0.03]"><i data-lucide="file-text" class="w-60 h-60 md:w-80 md:h-80"></i></div>
+                <div class="relative z-10 space-y-4 md:space-y-6">
+                    <div class="flex items-center gap-2 md:gap-4 flex-wrap">
+                        ${data.tags.map(tag => {
+                            const alwaysGlow = tagGlowCategories.includes(tag);
+                            return `<span class="px-2 md:px-3 py-1 ${alwaysGlow ? 'special-glow border' : 'bg-cyan-500/10 border border-cyan-500/30 text-cyan-400'} text-[9px] md:text-[10px] font-bold rounded uppercase">${tag}</span>`;
+                        }).join('')}
+                        <span class="w-1 h-1 rounded-full bg-slate-700 hidden sm:block"></span>
+                        <span class="text-slate-500 font-mono text-xs hidden sm:block">${data.date}</span>
+                    </div>
+                    <h2 class="text-2xl md:text-5xl font-black text-white tracking-tight leading-tight">${data.title}</h2>
+                    <div class="h-px w-16 md:w-24 bg-cyan-500/50"></div>
+                    <div class="content-scroll"><div class="text-slate-400 leading-relaxed font-light text-base md:text-xl">${data.content}</div></div>
+                    <div class="pt-4 flex justify-end">
+                        <button onclick="scrollToTimelineItem('${data.id}')" class="flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-xl hover:bg-cyan-500/20 transition-all text-sm font-bold">
+                            <i data-lucide="clock" class="w-4 h-4"></i> 在時間軸中定位
+                        </button>
                     </div>
                 </div>
-            `;
+            </div>`;
             lucide.createIcons();
-            
-            document.querySelectorAll('.time-tree-item').forEach(el => {
-                if(el.dataset.id === activeId) el.classList.add('timeline-item-active');
-                else el.classList.remove('timeline-item-active');
-            });
+            updateTimelineHighlight();
         }
 
         function renderTimeTree() {
@@ -475,31 +695,28 @@
                 const isEven = index % 2 === 0;
                 const isActive = activeId === log.id;
                 return `
-                    <div data-id="${log.id}" class="time-tree-item reveal ${isEven ? 'reveal-left' : 'reveal-right'} ${isActive ? 'timeline-item-active' : ''} flex items-center w-full relative" style="transition-delay: ${index * 0.05}s">
-                        <div class="absolute left-[-4px] md:left-1/2 md:-translate-x-1/2 flex items-center justify-center z-20">
-                            <div class="timeline-dot w-2 h-2 bg-slate-800 border border-slate-700 rounded-full"></div>
-                        </div>
-                        <div class="w-full md:w-[45%] pl-10 md:pl-0 md:${isEven ? 'mr-auto md:pr-12' : 'ml-auto md:pl-12'}">
-                            <div onclick="setActive('${log.id}')" class="timeline-card glass-panel p-5 md:p-6 rounded-3xl border-white/5 relative group hover:border-cyan-500/40 hover:bg-white/[0.04] transition-all cursor-pointer">
-                                <div class="flex justify-between items-stretch gap-4">
-                                    <div class="flex-grow">
-                                        <span class="text-cyan-500 font-mono text-[10px] font-bold block opacity-60 tracking-widest uppercase mb-1">${log.date}</span>
-                                        <h3 class="text-lg md:text-xl font-black text-white mb-2 group-hover:text-cyan-400 transition-colors tracking-tight">${log.title}</h3>
-                                        <div class="text-slate-500 leading-relaxed text-xs max-w-[95%] font-light line-clamp-2">
-                                            ${log.content.replace(/<[^>]*>/g, ' ').substring(0, 100)}...
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col gap-2 shrink-0">
-                                        ${log.tags.map(tag => `
-                                            <div class="w-10 h-10 flex items-center justify-center rounded-xl border transition-all duration-300 group-hover:scale-110 ${(tag === '開服' || tag === '伺服器') ? 'special-glow' : 'bg-white/5 border-white/10 text-slate-600'}">
-                                                <i data-lucide="${tagIcons[tag]}" class="w-5 h-5"></i>
-                                            </div>
-                                        `).join('')}
-                                    </div>
+                <div data-id="${log.id}" id="timeline-item-${log.id}" class="time-tree-item reveal ${isEven ? 'reveal-left' : 'reveal-right'} ${isActive ? 'timeline-item-active' : ''} flex items-center w-full relative" style="transition-delay: ${index * 0.04}s">
+                    <div class="absolute left-[2px] md:left-1/2 md:-translate-x-1/2 flex items-center justify-center z-20">
+                        <div id="dot-${log.id}" class="timeline-dot w-2.5 h-2.5 md:w-2 md:h-2 bg-slate-800 border-2 border-slate-700 rounded-full" onclick="event.stopPropagation(); setActive('${log.id}', { forceScroll: true })"></div>
+                    </div>
+                    <div class="w-full md:w-[45%] pl-8 md:pl-0 md:${isEven ? 'mr-auto md:pr-10' : 'ml-auto md:pl-10'}">
+                        <div onclick="setActive('${log.id}', { skipDetail: true, skipScroll: true, skipTimelineRender: true })" 
+                             onmouseenter="highlightDot('${log.id}')" 
+                             onmouseleave="unhighlightDot('${log.id}')" 
+                             class="timeline-card glass-panel p-4 md:p-6 rounded-2xl md:rounded-3xl border-white/5 relative group transition-all">
+                            <div class="flex justify-between items-stretch gap-3 md:gap-4">
+                                <div class="flex-grow min-w-0">
+                                    <span class="text-cyan-500 font-mono text-[9px] md:text-[10px] font-bold block opacity-60 tracking-widest uppercase mb-1">${log.date}</span>
+                                    <h3 class="text-base md:text-xl font-black text-white mb-1 md:mb-2 group-hover:text-cyan-400 transition-colors tracking-tight line-clamp-2">${log.title}</h3>
+                                    <div class="text-slate-500 leading-relaxed text-[11px] md:text-xs max-w-[95%] font-light line-clamp-2">${log.content.replace(/<[^>]*>/g, ' ').substring(0, 100)}...</div>
+                                </div>
+                                <div class="flex flex-col gap-1.5 md:gap-2 shrink-0">
+                                    ${log.tags.slice(0,3).map(tag => renderTagIcon(tag, isActive)).join('')}
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 `;
             }).join('');
             lucide.createIcons();
@@ -509,22 +726,46 @@
         function initObserver() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) entry.target.classList.add('active');
-                    else entry.target.classList.remove('active');
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else {
+                        entry.target.classList.remove('active');
+                    }
                 });
-            }, { threshold: 0.1, rootMargin: "0px 0px -10% 0px" });
+            }, { threshold: 0.08, rootMargin: "0px 0px -8% 0px" });
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         }
 
         function setFilter(type) { filterType = type; renderFilters(); renderCardList(); }
-        
-        function setActive(id) { 
-            activeId = id; 
-            renderCardList(); 
-            renderDetail(); 
+
+        function setActive(id, options = {}) {
+            if (activeId === id && !options.forceScroll) return;
+            activeId = id;
+            
+            if (!options.skipDetail) {
+                renderDetail();
+            }
+            if (!options.skipTimelineRender) {
+                updateTimelineHighlight();
+            }
+            renderCardList();
+            
+            if (options.forceScroll) {
+                document.getElementById('detail-scroll')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else if (!options.skipScroll && window.innerWidth < 768) {
+                document.getElementById('detail-scroll')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         document.getElementById('search-input').addEventListener('input', (e) => { searchQuery = e.target.value; renderCardList(); });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('search-input').value = '';
+                searchQuery = '';
+                renderCardList();
+                document.getElementById('search-input').blur();
+            }
+        });
 
         window.onload = () => { renderFilters(); renderCardList(); renderDetail(); renderTimeTree(); };
     </script>
