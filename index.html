@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>山岳礦工藝</title>
     <link rel="icon" type="image/png" href="https://github.io/CYC-WHLD/MC-Server-C08/8r.png">
-    <script src="https://cdn.tailwindcss.com/"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -26,156 +26,583 @@
             --lg-red: #fb4268;
             --lg-grey: #e0e0f0;
             --card-solid-bg: #070712;
+            --body-bg: radial-gradient(circle at 50% 50%, #0c0c1e 0%, #030307 100%);
+            --nav-bg: rgba(5, 5, 10, 0.85);
+            --nav-border: rgba(255, 255, 255, 0.18);
+            --social-bg: rgba(255, 255, 255, 0.05);
+            --social-border: rgba(255, 255, 255, 0.12);
+            --status-bg: rgba(255, 255, 255, 0.05);
+            --status-border: rgba(255, 255, 255, 0.1);
+            --footer-bg: #030307;
+            --footer-text: #374151;
+            --text-gray-custom: #9ca3af;
+            --mountain-color: #ffffff;
         }
+
+        body.light-theme {
+            --cyber-blue: #0088b0;
+            --cyber-dark: #f5f5f0;
+            --cyber-gray: rgba(200, 200, 210, 0.6);
+            --text-dark: #1a1a2e;
+            --text-light: #2d2d3f;
+            --brand-github: #111111;
+            --lg-bg-color: rgba(0, 0, 0, 0.05);
+            --lg-highlight: rgba(0, 0, 0, 0.1);
+            --lg-text: #1a1a2e;
+            --lg-grey: #3a3a4a;
+            --card-solid-bg: #ffffff;
+            --body-bg: #f9f9f5;
+            --nav-bg: rgba(250, 250, 245, 0.9);
+            --nav-border: rgba(0, 0, 0, 0.12);
+            --social-bg: rgba(0, 0, 0, 0.03);
+            --social-border: rgba(0, 0, 0, 0.1);
+            --status-bg: rgba(0, 0, 0, 0.04);
+            --status-border: rgba(0, 0, 0, 0.1);
+            --footer-bg: #eaeaea;
+            --footer-text: #1f2937;
+            --text-gray-custom: #4b5563;
+            --mountain-color: #1a1a2e;
+        }
+
         body {
             font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
             background-color: var(--cyber-dark);
             color: var(--text-light);
             margin: 0;
             overflow-x: hidden;
-            background: radial-gradient(circle at 50% 50%, #0c0c1e 0%, #030307 100%);
+            background: var(--body-bg);
+            transition: background 0.4s ease, color 0.4s ease;
         }
-        h1, h2, h3, .font-mono { font-family: "Share Tech Mono", "Microsoft JhengHei", sans-serif; }
-        .font-calligraphy { font-family: 'Ma Shan Zheng', cursive; letter-spacing: 2px; }
+
+        h1, h2, h3, .font-mono {
+            font-family: "Share Tech Mono", "Microsoft JhengHei", sans-serif;
+        }
+
+        .font-calligraphy {
+            font-family: 'Ma Shan Zheng', cursive;
+            letter-spacing: 2px;
+        }
+
         .nav-container {
-            background: rgba(5, 5, 10, 0.85);
+            background: var(--nav-bg);
             backdrop-filter: blur(20px);
-            border: 1.5px solid rgba(255, 255, 255, 0.18);
+            border: 1.5px solid var(--nav-border);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 210, 255, 0.1);
-            transition: all 0.3s ease;
+            transition: all 0.3s ease, background 0.4s ease, border-color 0.4s ease;
         }
-        .nav-container:hover { border-color: rgba(0,210,255,0.4); box-shadow: 0 10px 50px rgba(0,0,0,0.9), 0 0 20px rgba(0,210,255,0.15); }
+
+        .nav-container:hover {
+            border-color: rgba(0, 210, 255, 0.4);
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 210, 255, 0.15);
+        }
+
         .social-icon {
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex; align-items: center; justify-content: center;
-            width: 38px; height: 38px; border-radius: 50%;
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
-            font-size: 1rem; text-decoration: none; overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--social-bg);
+            border: 1px solid var(--social-border);
+            font-size: 1rem;
+            text-decoration: none;
+            overflow: hidden;
+            color: inherit;
         }
-        @media (min-width: 768px) { .social-icon { width: 44px; height: 44px; font-size: 1.2rem; } }
+
+        @media (min-width: 768px) {
+            .social-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
+        }
+
         .brand-logo-frame {
             border-radius: 50%;
-            border: 1.5px solid rgba(0,210,255,0.3);
-            background: rgba(0,210,255,0.1); width: 38px; height: 38px;
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
-            transition: all 0.4s ease; flex-shrink: 0;
+            border: 1.5px solid rgba(0, 210, 255, 0.3);
+            background: rgba(0, 210, 255, 0.1);
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            flex-shrink: 0;
         }
-        @media (min-width: 768px) { .brand-logo-frame { width: 44px; height: 44px; } }
-        .brand-logo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        @media (min-width: 768px) {
+            .brand-logo-frame {
+                width: 44px;
+                height: 44px;
+            }
+        }
+
+        .brand-logo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .icon-discord { color: var(--brand-discord); }
         .icon-discord:hover { background: var(--brand-discord); color: white; border-color: transparent; transform: scale(1.1); }
+
         .icon-github { color: var(--brand-github); }
-        .icon-github:hover { background: white; color: black; border-color: transparent; transform: scale(1.1); }
-        .icon-ig { background: var(--brand-ig-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        .icon-ig:hover { background: var(--brand-ig-gradient); -webkit-text-fill-color: white; border-color: transparent; transform: scale(1.1); }
+        .icon-github:hover { background: var(--brand-github); color: black; border-color: transparent; transform: scale(1.1); }
+
+        body.light-theme .icon-github { color: #111; }
+        body.light-theme .icon-github:hover { background: #111; color: white; }
+
+        .icon-ig {
+            background: var(--brand-ig-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .icon-ig:hover {
+            background: var(--brand-ig-gradient);
+            -webkit-text-fill-color: white;
+            border-color: transparent;
+            transform: scale(1.1);
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            background: var(--social-bg);
+            border: 1px solid var(--social-border);
+            color: var(--text-light);
+        }
+
         .hero-section {
-            min-height: 85vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center;
-            padding: 120px 20px 40px; background: linear-gradient(rgba(5,5,10,0.5), rgba(5,5,10,0.9));
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 40px;
+            background: linear-gradient(rgba(5, 5, 10, 0.5), rgba(5, 5, 10, 0.9));
         }
+
+        body.light-theme .hero-section {
+            background: linear-gradient(rgba(245, 245, 240, 0.7), rgba(245, 245, 240, 0.95));
+        }
+
         .cyber-title {
-            font-size: clamp(2.2rem, 8vw, 5rem); font-weight: 900; color: white;
-            letter-spacing: -1px; margin-bottom: 1.5rem; text-shadow: 0 0 30px rgba(0,210,255,0.2);
+            font-size: clamp(2.2rem, 8vw, 5rem);
+            font-weight: 900;
+            color: white;
+            letter-spacing: -1px;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 30px rgba(0, 210, 255, 0.2);
         }
+
+        body.light-theme .cyber-title {
+            color: #1a1a2e;
+            text-shadow: 0 0 20px rgba(0, 136, 176, 0.15);
+        }
+
         .cyber-button {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
-            color: var(--cyber-blue); padding: 12px 30px; border-radius: 50px;
-            font-weight: bold; font-size: 0.85rem; transition: 0.3s;
-            backdrop-filter: blur(10px); cursor: pointer; display: flex; align-items: center; gap: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--cyber-blue);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .cyber-button:hover { background: var(--cyber-blue); color: black; box-shadow: 0 0 20px var(--cyber-blue); transform: translateY(-2px); }
+
+        body.light-theme .cyber-button {
+            background: rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            color: #0088b0;
+        }
+
+        .cyber-button:hover {
+            background: var(--cyber-blue);
+            color: black;
+            box-shadow: 0 0 20px var(--cyber-blue);
+            transform: translateY(-2px);
+        }
+
         .status-container {
-            display: flex; align-items: center; padding: 12px 30px;
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 50px; justify-content: center; gap: 10px;
+            display: flex;
+            align-items: center;
+            padding: 12px 30px;
+            background: var(--status-bg);
+            border: 1px solid var(--status-border);
+            border-radius: 50px;
+            justify-content: center;
+            gap: 10px;
+            color: var(--text-light);
         }
-        .resource-section { padding-top: 5rem; padding-bottom: 2rem; }
+
+        .resource-section {
+            padding-top: 5rem;
+            padding-bottom: 2rem;
+        }
+
         .glass-container {
-            position: relative; display: flex; flex-direction: column;
-            border-radius: 2rem; overflow: hidden; color: var(--lg-text);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border-radius: 2rem;
+            overflow: hidden;
+            color: var(--lg-text);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer; border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .card-solid-base { position: absolute; inset: 0; background-color: var(--card-solid-bg); z-index: 0; }
+
+        body.light-theme .glass-container {
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-solid-base {
+            position: absolute;
+            inset: 0;
+            background-color: var(--card-solid-bg);
+            z-index: 0;
+        }
+
         .glass-container:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 15px rgba(0,210,255,0.2);
-            border-color: rgba(0,210,255,0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 210, 255, 0.2);
+            border-color: rgba(0, 210, 255, 0.4);
         }
-        .glass-filter, .glass-overlay, .glass-specular { position: absolute; inset: 0; border-radius: inherit; }
-        .glass-filter { z-index: 1; backdrop-filter: blur(8px); filter: url(#lensFilter) saturate(120%) brightness(1.15); }
+
+        body.light-theme .glass-container:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 15px rgba(0, 136, 176, 0.3);
+            border-color: rgba(0, 136, 176, 0.5);
+        }
+
+        .glass-filter, .glass-overlay, .glass-specular {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+        }
+
+        .glass-filter {
+            z-index: 1;
+            backdrop-filter: blur(8px);
+            filter: url(#lensFilter) saturate(120%) brightness(1.15);
+        }
+
+        body.light-theme .glass-filter {
+            filter: url(#lensFilter) saturate(100%) brightness(1.05);
+        }
+
         .glass-overlay { z-index: 2; background: var(--lg-bg-color); }
         .glass-specular { z-index: 3; box-shadow: inset 1px 1px 0 var(--lg-highlight), inset 0 0 10px var(--lg-highlight); }
-        .glass-content { position: relative; z-index: 4; display: flex; flex-direction: column; align-items: center; padding: 40px 24px; gap: 1rem; text-align: center; }
-        .glass-item svg { color: var(--lg-grey); width: 42px; height: 42px; filter: drop-shadow(0 0 3px rgba(255,255,255,0.25)); transition: transform 0.25s ease-out, color 0.3s ease; }
-        .glass-container:hover .glass-item svg { transform: scale(1.1); color: var(--cyber-blue); }
+
+        .glass-content {
+            position: relative;
+            z-index: 4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 24px;
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .glass-item svg {
+            color: var(--lg-grey);
+            width: 42px;
+            height: 42px;
+            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.25));
+            transition: transform 0.25s ease-out, color 0.3s ease;
+        }
+
+        body.light-theme .glass-item svg {
+            filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.1));
+        }
+
+        .glass-container:hover .glass-item svg {
+            transform: scale(1.1);
+            color: var(--cyber-blue);
+        }
+
         .slider-section {
-            padding: 0; overflow: hidden; position: relative; background: transparent;
-            touch-action: pan-y; height: 500px; display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+            background: transparent;
+            touch-action: pan-y;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
             margin-top: -1rem;
         }
-        #hologram-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 1; }
+
+        #hologram-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 1;
+        }
+
         .slider-track {
-            display: flex; animation: scrollIcons 35s linear infinite;
-            padding: 40px 0 50px; gap: 40px; width: max-content; pointer-events: auto;
-            align-items: center; position: relative; z-index: 5;
-            background: linear-gradient(to top, rgba(3,3,7,1) 40%, rgba(3,3,7,0.4) 80%, transparent 100%);
+            display: flex;
+            animation: scrollIcons 35s linear infinite;
+            padding: 40px 0 50px;
+            gap: 40px;
+            width: max-content;
+            pointer-events: auto;
+            align-items: center;
+            position: relative;
+            z-index: 5;
+            background: linear-gradient(to top, rgba(3, 3, 7, 1) 40%, rgba(3, 3, 7, 0.4) 80%, transparent 100%);
         }
+
+        body.light-theme .slider-track {
+            background: linear-gradient(to top, rgba(245, 245, 240, 1) 40%, rgba(245, 245, 240, 0.6) 80%, transparent 100%);
+        }
+
         .icon-box {
-            height: 70px; width: 70px; background: rgba(10, 10, 25, 0.85);
-            border: 1.5px solid rgba(255, 255, 255, 0.15); border-radius: 18px;
-            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; backdrop-filter: blur(8px);
+            height: 70px;
+            width: 70px;
+            background: rgba(10, 10, 25, 0.85);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            position: relative; /* 改為相對定位以使用 top 浮動 */
         }
-        .icon-box:nth-child(odd) { transform: translateY(-20px); }
-        .icon-box:nth-child(even) { transform: translateY(20px); }
+
+        body.light-theme .icon-box {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1.5px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 使用 top 替代 transform 的 translateY，避免與 hover 的 scale 衝突 */
+        .icon-box:nth-child(odd) { top: -20px; }
+        .icon-box:nth-child(even) { top: 20px; }
+
         .icon-box:hover {
-            background: rgba(255, 255, 255, 0.15); border-color: var(--cyber-blue);
-            box-shadow: 0 0 30px rgba(0, 210, 255, 0.4); z-index: 50; transform: translateY(0) scale(1.25) !important;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.4);
+            z-index: 50;
+            transform: scale(1.25); /* 只保留放大，不再改變 top */
         }
-        .icon-box img { width: 35px; height: 35px; object-fit: contain; pointer-events: none; }
-        @keyframes scrollIcons { 0% { transform: translateX(0); } 100% { transform: translateX(-33.3333%); } }
+
+        body.light-theme .icon-box:hover {
+            background: rgba(0, 136, 176, 0.15);
+            box-shadow: 0 0 25px rgba(0, 136, 176, 0.3);
+        }
+
+        .icon-box img {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        @keyframes scrollIcons {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
         .back-to-top {
-            position: fixed; bottom: 30px; right: 30px; width: 50px; height: 120px;
-            border-radius: 50px; z-index: 1000; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; cursor: pointer; text-decoration: none;
-            color: white; opacity: 0; visibility: hidden; transform: translateY(30px) scale(0.9);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 120px;
+            border-radius: 50px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(30px) scale(0.9);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
         }
-        .back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
         .back-to-top::before {
-            content: ""; position: absolute; width: 200%; height: 200%;
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
             background: conic-gradient(transparent, transparent, transparent, var(--cyber-blue), transparent);
             animation: liquidRotate 4s linear infinite;
         }
+
         .back-to-top::after {
-            content: ""; position: absolute; inset: 2px; background: rgba(10, 10, 20, 0.6);
-            backdrop-filter: blur(15px); border-radius: 48px; z-index: 1;
+            content: "";
+            position: absolute;
+            inset: 2px;
+            background: rgba(10, 10, 20, 0.6);
+            backdrop-filter: blur(15px);
+            border-radius: 48px;
+            z-index: 1;
         }
-        .back-to-top .content-wrapper { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .back-to-top i { font-size: 18px; color: var(--cyber-blue); text-shadow: 0 0 10px var(--cyber-blue); }
-        .back-to-top .vertical-text { font-size: 13px; writing-mode: vertical-rl; letter-spacing: 6px; font-weight: 700; color: rgba(255, 255, 255, 0.95); text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
-        .back-to-top:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 0 30px rgba(0, 210, 255, 0.3); }
-        .status-dot { width: 8px; height: 8px; background: #00ffaa; border-radius: 50%; box-shadow: 0 0 10px #00ffaa; margin-right: 12px; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+
+        .back-to-top .content-wrapper {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-to-top i {
+            font-size: 18px;
+            color: var(--cyber-blue);
+            text-shadow: 0 0 10px var(--cyber-blue);
+        }
+
+        .back-to-top .vertical-text {
+            font-size: 13px;
+            writing-mode: vertical-rl;
+            letter-spacing: 6px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #00ffaa;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ffaa;
+            margin-right: 12px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
         .toast-message {
-            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(100px);
-            background: rgba(5, 5, 10, 0.95); border-left: 4px solid var(--cyber-blue); color: white;
-            padding: 10px 20px; border-radius: 8px; font-family: 'Share Tech Mono', monospace; font-size: 0.75rem;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); opacity: 0; z-index: 100; pointer-events: none;
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(5, 5, 10, 0.95);
+            border-left: 4px solid var(--cyber-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0;
+            z-index: 100;
+            pointer-events: none;
         }
-        .toast-message.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        .footer-brand { font-family: 'Ma Shan Zheng', cursive; font-size: 26px; margin-bottom: 0.5rem; opacity: 0.3; }
-        .footer-text { font-size: 13.5px; line-height: 1.4; letter-spacing: 0.1em; color: #374151; max-width: 800px; margin: 0 auto; text-transform: uppercase; padding: 0 20px; }
-        .footer-legal { margin-top: 0.4rem; opacity: 0.8; font-size: 11px; color: #374151; letter-spacing: 0.05em; }
-        .brand-title { font-size: 24px; flex-grow: 1; text-align: center; }
-        @media (min-width: 768px) { .brand-title { font-size: 38px; } }
+
+        body.light-theme .toast-message {
+            background: rgba(255, 255, 255, 0.95);
+            color: #1a1a2e;
+            border-left-color: #0088b0;
+        }
+
+        .toast-message.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .footer-brand {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 26px;
+            margin-bottom: 0.5rem;
+            opacity: 0.3;
+        }
+
+        body.light-theme .footer-brand {
+            opacity: 0.7;
+            color: #1a1a2e;
+        }
+
+        .footer-text {
+            font-size: 13.5px;
+            line-height: 1.4;
+            letter-spacing: 0.1em;
+            color: var(--footer-text);
+            max-width: 800px;
+            margin: 0 auto;
+            text-transform: uppercase;
+            padding: 0 20px;
+        }
+
+        .footer-legal {
+            margin-top: 0.4rem;
+            opacity: 0.8;
+            font-size: 11px;
+            color: var(--footer-text);
+            letter-spacing: 0.05em;
+        }
+
+        .brand-title {
+            font-size: 24px;
+            flex-grow: 1;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .brand-mountain { color: var(--mountain-color); }
+
+        @media (min-width: 768px) {
+            .brand-title { font-size: 38px; }
+        }
+
         @media (max-width: 640px) {
             .brand-title span:first-child { display: block; line-height: 1; font-size: 0.8em; }
-            .brand-title { line-height: 1.1; margin: 0 10px; }
+            .brand-title { line-height: 1.1; margin: 0 10px; font-size: 18px; }
             .nav-container { padding-left: 1rem; padding-right: 1rem; }
             .social-icon-group { gap: 0.5rem !important; }
+            .social-icon { width: 32px; height: 32px; font-size: 0.9rem; }
         }
+
+        body.light-theme .text-gray-500 { color: #4a4a5a !important; }
+        body.light-theme .text-gray-300 { color: #2d2d3f !important; }
+        body.light-theme .text-gray-700 { color: #2d2d3f !important; }
+        body.light-theme .text-gray-400\/80 { color: rgba(0, 0, 0, 0.5) !important; }
     </style>
 </head>
 <body>
@@ -195,12 +622,15 @@
                 </div>
             </div>
             <div class="brand-title font-calligraphy whitespace-nowrap overflow-hidden">
-                <span class="text-white">山岳</span><span class="text-[var(--cyber-blue)]">礦工藝</span>
+                <span class="brand-mountain">山岳</span><span class="text-[var(--cyber-blue)]">礦工藝</span>
             </div>
             <div class="flex items-center gap-2 md:gap-4 social-icon-group">
                 <a href="https://discord.gg/szbEv4gM" target="_blank" class="social-icon icon-discord"><i class="fa-brands fa-discord"></i></a>
-                <a href="https://github.com/CYC-WHLD" target="_blank" class="social-icon icon-github hidden sm:flex"><i class="fa-brands fa-github"></i></a>
+                <a href="https://github.com/CYC-WHLD" target="_blank" class="social-icon icon-github flex"><i class="fa-brands fa-github"></i></a>
                 <a href="https://www.instagram.com/cycldmt09/" target="_blank" class="social-icon icon-ig"><i class="fa-brands fa-instagram"></i></a>
+                <button id="themeToggle" class="social-icon theme-toggle flex" title="切換淺色/深色模式">
+                    <i class="fa-solid fa-sun"></i>
+                </button>
             </div>
         </div>
     </nav>
@@ -231,7 +661,7 @@
 
     <section class="container mx-auto px-6 resource-section">
         <div class="text-center mb-16">
-            <h2 class="text-[28px] md:text-[36px] font-black mb-2">資源控制中心</h2>
+            <h2 class="text-[28px] md:text-[36px] font-black mb-2 text-white">資源控制中心</h2>
             <p class="text-[14px] md:text-[16px] font-mono tracking-[0.4em] text-gray-700 uppercase">Selection Modules</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -265,7 +695,6 @@
     <section class="slider-section">
         <canvas id="hologram-canvas"></canvas>
         <div class="slider-track" id="sliderTrack">
-            <!-- 原有的11个图标 + 5个新图标，均带点击跳转 -->
             <div class="icon-box" title="Minecraft" onclick="window.open('https://www.minecraft.net/','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/minecraft.png" alt="MC"></div>
             <div class="icon-box" title="Discord" onclick="window.open('https://discord.gg/szbEv4gM','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/discord.png" alt="Discord"></div>
             <div class="icon-box" title="Forge" onclick="window.open('https://files.minecraftforge.net/','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/forge.png" alt="Forge"></div>
@@ -277,24 +706,17 @@
             <div class="icon-box" title="Radmin VPN" onclick="window.open('https://www.radmin-vpn.com/','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/radmin.png" alt="Radmin"></div>
             <div class="icon-box" title="Tailscale" onclick="window.open('https://tailscale.com/','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/tailscale.png" alt="Tailscale"></div>
             <div class="icon-box" title="Fabric" onclick="window.open('https://fabricmc.net/','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/fabric.png" alt="Fabric"></div>
-            <!-- 新增5个图标 -->
             <div class="icon-box" title="Cloudflare" onclick="window.open('https://www.cloudflare.com/','_blank')"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"></div>
             <div class="icon-box" title="DeepSeek" onclick="window.open('https://deepseek.com/','_blank')"><img src="https://cdn.simpleicons.org/deepseek" alt="DeepSeek"></div>
             <div class="icon-box" title="Gemini" onclick="window.open('https://deepmind.google/technologies/gemini/','_blank')"><img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_SparkIcon_.width-500.format-webp.webp" alt="Gemini"></div>
             <div class="icon-box" title="Qwen" onclick="window.open('https://tongyi.aliyun.com/qianwen/','_blank')"><img src="https://cdn.simpleicons.org/qwen" alt="Qwen"></div>
             <div class="icon-box" title="Codex" onclick="window.open('https://openai.com/','_blank')">
-            <video 
-                src="https://cdn.openai.com/cap/76B4ISvLjfcSygxIvoMqyl/7d037d99808d419313b42980eb181ecg.mp4"
-                autoplay 
-                muted 
-                loop 
-                playsinline
-                width="35" 
-                height="35"
-                style="object-fit: contain; pointer-events: none;"></video></div>
+                <video src="https://cdn.openai.com/cap/76B4ISvLjfcSygxIvoMqyl/7d037d99808d419313b42980eb181ecg.mp4" autoplay muted loop playsinline width="35" height="35" style="object-fit: contain; pointer-events: none;"></video>
+            </div>
         </div>
     </section>
-    <footer class="py-12 text-center border-t border-white/5 bg-[#030307]">
+
+    <footer class="py-12 text-center border-t border-white/5 bg-[#030307]" style="background-color: var(--footer-bg);">
         <div class="footer-brand">山岳<span class="text-[var(--cyber-blue)]">礦工藝</span></div>
         <div class="footer-text font-mono">
             Copyright © 2026 山岳礦工藝團隊. All rights reserved.<br>
@@ -310,6 +732,36 @@
 
     <script>
         lucide.createIcons();
+
+        (function() {
+            const body = document.body;
+            const toggleBtn = document.getElementById('themeToggle');
+            const icon = toggleBtn.querySelector('i');
+
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                body.classList.add('light-theme');
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                body.classList.remove('light-theme');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+
+            toggleBtn.addEventListener('click', () => {
+                body.classList.toggle('light-theme');
+                if (body.classList.contains('light-theme')) {
+                    localStorage.setItem('theme', 'light');
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                } else {
+                    localStorage.setItem('theme', 'dark');
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                }
+            });
+        })();
 
         const initHologram = () => {
             const canvas = document.getElementById('hologram-canvas');
@@ -332,8 +784,8 @@
                 const theta = Math.random() * Math.PI * 2;
                 const phi = Math.random() * Math.PI;
                 starsPositions[i] = r * Math.sin(phi) * Math.cos(theta);
-                starsPositions[i+1] = r * Math.sin(phi) * Math.sin(theta);
-                starsPositions[i+2] = r * Math.cos(phi);
+                starsPositions[i + 1] = r * Math.sin(phi) * Math.sin(theta);
+                starsPositions[i + 2] = r * Math.cos(phi);
             }
             starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
             const stars = new THREE.Points(starsGeometry, new THREE.PointsMaterial({ color: 0xffffff, size: 0.3, transparent: true, opacity: 0.7 }));
@@ -366,9 +818,9 @@
                 const color = i < 3 ? 0x00ffff : 0xff9900;
                 const group = new THREE.Group();
                 const s = 0.5;
-                group.add(new THREE.Mesh(new THREE.BoxGeometry(0.2*s,0.1*s,0.5*s), new THREE.MeshStandardMaterial({color, emissive:color, emissiveIntensity:0.5})));
-                group.add(new THREE.Mesh(new THREE.BoxGeometry(0.6*s,0.02*s,0.2*s), new THREE.MeshStandardMaterial({color})));
-                group.userData = { speed:0.015+Math.random()*0.01, offset:Math.random()*Math.PI*2, radius:3.5+Math.random()*1.5, yOffset:(Math.random()-0.5)*1.5 };
+                group.add(new THREE.Mesh(new THREE.BoxGeometry(0.2 * s, 0.1 * s, 0.5 * s), new THREE.MeshStandardMaterial({ color, emissive: color, emissiveIntensity: 0.5 })));
+                group.add(new THREE.Mesh(new THREE.BoxGeometry(0.6 * s, 0.02 * s, 0.2 * s), new THREE.MeshStandardMaterial({ color })));
+                group.userData = { speed: 0.015 + Math.random() * 0.01, offset: Math.random() * Math.PI * 2, radius: 3.5 + Math.random() * 1.5, yOffset: (Math.random() - 0.5) * 1.5 };
                 ships.push(group);
                 earthSystem.add(group);
             }
@@ -395,7 +847,7 @@
                     ship.position.x = Math.cos(angle) * sd.radius;
                     ship.position.z = Math.sin(angle) * sd.radius;
                     ship.position.y = Math.sin(time * 0.5 + sd.offset) * 0.8 + sd.yOffset;
-                    ship.lookAt(Math.cos(angle+0.1)*sd.radius, Math.sin((time+0.025)*0.5+sd.offset)*0.8+sd.yOffset, Math.sin(angle+0.1)*sd.radius);
+                    ship.lookAt(Math.cos(angle + 0.1) * sd.radius, Math.sin((time + 0.025) * 0.5 + sd.offset) * 0.8 + sd.yOffset, Math.sin(angle + 0.1) * sd.radius);
                 });
                 renderer.render(scene, camera);
             };
@@ -421,7 +873,7 @@
             });
             const track = document.getElementById('sliderTrack');
             const items = track.innerHTML;
-            track.innerHTML = items + items + items;
+            track.innerHTML = items + items;
         });
 
         const backToTopBtn = document.getElementById('backToTop');
@@ -453,16 +905,17 @@
     // Created: 2026-03-13~14                                             //           
     // UpdateLog:                                                         //
     // 3-14 1.0.0                                                         //
-    //新增伺服器位連線網頁                                                  //
+    // 新增伺服器位連線網頁                                                 //
     // 3-15 2.0.0                                                         //
     // 修復地球磨皮等數學運算函數、新增資料庫網頁、修復複製按鈕、優化卡片樣式   //
     // 3-16 3.0.0                                                         //
     // 新增資源包檔案庫網頁                                                 //
     // 6-25 4.0.0                                                         // 
-    //更新伺服器檔案庫網頁                                                  // 
+    // 更新伺服器檔案庫網頁                                                 // 
     // 6-26 5.0.0                                                         // 
-    //更新官網首頁                                                         // 
-    // "Building the future block by block."                              //      
+    // 更新官網首頁                                                        // 
+    // 6-27 6.0.0                                                         // 
+    // 更新官網首頁、同步架設至Cloudfalre Pages                             //
+    // "Building the future block by block."                              //     
     ========================================================================
     -->
-
