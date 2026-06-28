@@ -659,62 +659,38 @@
         </div>
     </section>
 
-    <section class="container mx-auto px-6 resource-section">
-        <div class="text-center mb-16">
-            <h2 class="text-[28px] md:text-[36px] font-black mb-2 text-white">資源控制中心</h2>
-            <p class="text-[14px] md:text-[16px] font-mono tracking-[0.4em] text-gray-700 uppercase">Selection Modules</p>
+<section class="container mx-auto px-6 resource-section">
+    <div class="text-center mb-16">
+        <h2 class="text-[28px] md:text-[36px] font-black mb-2 text-white">資源控制中心</h2>
+        <p class="text-[14px] md:text-[16px] font-mono tracking-[0.4em] text-gray-700 uppercase">Selection Modules</p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div class="glass-container group" onclick="window.location.href='cards1.html'">
+            <div class="card-solid-base"></div><div class="glass-filter"></div><div class="glass-overlay"></div><div class="glass-specular"></div>
+            <div class="glass-content glass-item"><i data-lucide="database"></i><h3 class="font-bold text-lg mb-1">伺服器資料庫</h3><p class="text-[12px] text-gray-400/80 font-mono tracking-widest">查看伺服器版本更新日誌。</p></div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <div class="glass-container group" onclick="window.location.href='https://cyc-whld.github.io/MC-Server-C08/cards1.html'">
-                <div class="card-solid-base"></div><div class="glass-filter"></div><div class="glass-overlay"></div><div class="glass-specular"></div>
-                <div class="glass-content glass-item"><i data-lucide="database"></i><h3 class="font-bold text-lg mb-1">伺服器資料庫</h3><p class="text-[12px] text-gray-400/80 font-mono tracking-widest">查看伺服器版本更新日誌。</p></div>
-            </div>
-            <div class="glass-container group" onclick="window.location.href='https://cyc-whld.github.io/MC-Server-C08/cards2.html'">
-                <div class="card-solid-base"></div><div class="glass-filter"></div><div class="glass-overlay"></div><div class="glass-specular"></div>
-                <div class="glass-content glass-item"><i data-lucide="map"></i><h3 class="font-bold text-lg mb-1">連線IP資訊</h3><p class="text-[12px] text-gray-400/80 font-mono tracking-widest">獲得VPN與IP位置。</p></div>
-            </div>
-            <div class="glass-container group" onclick="showToast('功能教學頁面建置中')">
-                <div class="card-solid-base"></div><div class="glass-filter"></div><div class="glass-overlay"></div><div class="glass-specular"></div>
-                <div class="glass-content glass-item"><i data-lucide="zap"></i><h3 class="font-bold text-lg mb-1">特殊功能用法</h3><p class="text-[12px] text-gray-400/80 font-mono tracking-widest">了解特殊功能如何使用。</p></div>
-            </div>
-            <div class="glass-container group" onclick="showToast('合成表頁面建置中')">
-                <div class="card-solid-base"></div><div class="glass-filter"></div><div class="glass-overlay"></div><div class="glass-specular"></div>
-                <div class="glass-content glass-item"><i data-lucide="flask-conical"></i><h3 class="font-bold text-lg mb-1">特殊物品合成表</h3><p class="text-[12px] text-gray-400/80 font-mono tracking-widest">物品合成與取得指南。</p></div>
-            </div>
-            <div class="glass-container group" onclick="window.location.href='https://cyc-whld.github.io/MC-Server-C08/cards5.html'">
-                <div class="card-solid-base"></div><div class="glass-filter"></div><div class="glass-overlay"></div><div class="glass-specular"></div>
-                <div class="glass-content glass-item"><i data-lucide="package"></i><h3 class="font-bold text-lg mb-1">資源包下載</h3><p class="text-[12px] text-gray-400/80 font-mono tracking-widest">專屬資源包存放區。</p></div>
-            </div>
-            <div class="glass-container group" onclick="showToast('玩家模型頁面建置中')">
-                <div class="card-solid-base"></div><div class="glass-filter"></div><div class="glass-overlay"></div><div class="glass-specular"></div>
-                <div class="glass-content glass-item"><i data-lucide="users"></i><h3 class="font-bold text-lg mb-1">伺服器玩偶</h3><p class="text-[12px] text-gray-400/80 font-mono tracking-widest">已授權的玩家模型。</p></div>
-            </div>
+        <div class="glass-container group" onclick="window.location.href='cards2.html'">
+            <div class="card-solid-base"></div><div class="glass-filter"></div><div class="glass-overlay"></div><div class="glass-specular"></div>
+            <div class="glass-content glass-item"><i data-lucide="map"></i><h3 class="font-bold text-lg mb-1">連線IP資訊</h3><p class="text-[12px] text-gray-400/80 font-mono tracking-widest">獲得VPN與IP位置。</p></div>
         </div>
-    </section>
-
-    <section class="slider-section">
-        <canvas id="hologram-canvas"></canvas>
-        <div class="slider-track" id="sliderTrack">
-            <div class="icon-box" title="Minecraft" onclick="window.open('https://www.minecraft.net/','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/minecraft.png" alt="MC"></div>
-            <div class="icon-box" title="Discord" onclick="window.open('https://discord.gg/szbEv4gM','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/discord.png" alt="Discord"></div>
-            <div class="icon-box" title="Forge" onclick="window.open('https://files.minecraftforge.net/','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/forge.png" alt="Forge"></div>
-            <div class="icon-box" title="PaperMC" onclick="window.open('https://papermc.io/','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/papermc.png" alt="Paper"></div>
-            <div class="icon-box" title="VS Code" onclick="window.open('https://code.visualstudio.com/','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/vscode.png" alt="VSCode"></div>
-            <div class="icon-box" title="JavaScript" onclick="window.open('https://developer.mozilla.org/zh-TW/docs/Web/JavaScript','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/JavaScript.png" alt="JS"></div>
-            <div class="icon-box" title="Instagram" onclick="window.open('https://www.instagram.com/cycldmt09/','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/instagram.png" alt="IG"></div>
-            <div class="icon-box" title="GitHub" onclick="window.open('https://github.com/CYC-WHLD','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/github.png" alt="Github"></div>
-            <div class="icon-box" title="Radmin VPN" onclick="window.open('https://www.radmin-vpn.com/','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/radmin.png" alt="Radmin"></div>
-            <div class="icon-box" title="Tailscale" onclick="window.open('https://tailscale.com/','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/tailscale.png" alt="Tailscale"></div>
-            <div class="icon-box" title="Fabric" onclick="window.open('https://fabricmc.net/','_blank')"><img src="https://cyc-whld.github.io/MC-Server-C08/fabric.png" alt="Fabric"></div>
-            <div class="icon-box" title="Cloudflare" onclick="window.open('https://www.cloudflare.com/','_blank')"><img src="https://cdn.simpleicons.org/cloudflare" alt="Cloudflare"></div>
-            <div class="icon-box" title="DeepSeek" onclick="window.open('https://deepseek.com/','_blank')"><img src="https://cdn.simpleicons.org/deepseek" alt="DeepSeek"></div>
-            <div class="icon-box" title="Gemini" onclick="window.open('https://deepmind.google/technologies/gemini/','_blank')"><img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_SparkIcon_.width-500.format-webp.webp" alt="Gemini"></div>
-            <div class="icon-box" title="Qwen" onclick="window.open('https://tongyi.aliyun.com/qianwen/','_blank')"><img src="https://cdn.simpleicons.org/qwen" alt="Qwen"></div>
-            <div class="icon-box" title="Codex" onclick="window.open('https://openai.com/','_blank')">
-                <video src="https://cdn.openai.com/cap/76B4ISvLjfcSygxIvoMqyl/7d037d99808d419313b42980eb181ecg.mp4" autoplay muted loop playsinline width="35" height="35" style="object-fit: contain; pointer-events: none;"></video>
-            </div>
+        <div class="glass-container group" onclick="showToast('功能教學頁面建置中')">
+            <div class="card-solid-base"></div><div class="glass-filter"></div><div class="glass-overlay"></div><div class="glass-specular"></div>
+            <div class="glass-content glass-item"><i data-lucide="zap"></i><h3 class="font-bold text-lg mb-1">特殊功能用法</h3><p class="text-[12px] text-gray-400/80 font-mono tracking-widest">了解特殊功能如何使用。</p></div>
         </div>
-    </section>
+        <div class="glass-container group" onclick="showToast('合成表頁面建置中')">
+            <div class="card-solid-base"></div><div class="glass-filter"></div><div class="glass-overlay"></div><div class="glass-specular"></div>
+            <div class="glass-content glass-item"><i data-lucide="flask-conical"></i><h3 class="font-bold text-lg mb-1">特殊物品合成表</h3><p class="text-[12px] text-gray-400/80 font-mono tracking-widest">物品合成與取得指南。</p></div>
+        </div>
+        <div class="glass-container group" onclick="window.location.href='cards5.html'">
+            <div class="card-solid-base"></div><div class="glass-filter"></div><div class="glass-overlay"></div><div class="glass-specular"></div>
+            <div class="glass-content glass-item"><i data-lucide="package"></i><h3 class="font-bold text-lg mb-1">資源包下載</h3><p class="text-[12px] text-gray-400/80 font-mono tracking-widest">專屬資源包存放區。</p></div>
+        </div>
+        <div class="glass-container group" onclick="showToast('玩家模型頁面建置中')">
+            <div class="card-solid-base"></div><div class="glass-filter"></div><div class="glass-overlay"></div><div class="glass-specular"></div>
+            <div class="glass-content glass-item"><i data-lucide="users"></i><h3 class="font-bold text-lg mb-1">伺服器玩偶</h3><p class="text-[12px] text-gray-400/80 font-mono tracking-widest">已授權的玩家模型。</p></div>
+        </div>
+    </div>
+</section>
 
     <footer class="py-12 text-center border-t border-white/5 bg-[#030307]" style="background-color: var(--footer-bg);">
         <div class="footer-brand">山岳<span class="text-[var(--cyber-blue)]">礦工藝</span></div>
