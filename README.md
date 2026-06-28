@@ -48,7 +48,7 @@
 
 ### 伺服器資訊
 
-- **IP 位址**：`play.c08.net`
+- **IP 位址**：`26.77.136.232`
 - **遊戲版本**：Minecraft Java Edition 26.2
 - **正版驗證**：開啟 (Online Mode)
 
@@ -62,12 +62,13 @@
 ---
 
 ## 技術架構
-/project-root
-├── plugins/ # 自定義插件與配置
-├── scripts/ # 自動備份與重啟腳本
-├── assets/ # 專屬資源包與素材
-└── server.properties # 深度優化參數
 
+    /project-root
+    ├── darapack               # 自定義數據包與配置
+    ├── scripts/               # 優化參數與腳本
+    ├── resoources/            # 專屬資源包與素材
+    ├── mods/                  # 優化與專屬模組
+    └── server.properties      # 深度優化參數
 
 ---
 
